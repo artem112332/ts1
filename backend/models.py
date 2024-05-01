@@ -1,27 +1,41 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+specialization_choices = [
+    ('Teamlead', 'Teamlead'),
+    ('Backend', 'Backend'),
+    ('Frontend', 'Frontend'),
+    ('Дизайн', 'Дизайн'),
+    ('Аналитика', 'Аналитика'),
+]
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, models.CASCADE)
     last_name = models.CharField(max_length=50)  # Фамилия
     first_name = models.CharField(max_length=50)  # Имя
     middle_name = models.CharField(max_length=50)  # Отчество
-    is_mentor = models.BooleanField(default=False)
-    specialization_choices = [
-        ('Teamlead', 'Teamlead'),
-        ('Backend', 'Backend'),
-        ('Frontend', 'Frontend'),
-        ('Дизайн', 'Дизайн'),
-        ('Аналитика', 'Аналитика'),
+    status_choises = [
+        ('Проектант', 'Проектант'),
+        ('Наставник', 'Наставник')
     ]
-    specialization_1 = models.CharField(max_length=20, choices=specialization_choices)
-    specialization_2 = models.CharField(max_length=20, choices=specialization_choices)
-    specialization_3 = models.CharField(max_length=20, choices=specialization_choices)
-    description = models.TextField(max_length=1000)
+    status = models.CharField(max_length=20, choices=status_choises, default='Проектант')
+    specialization_1 = models.CharField(max_length=20, choices=specialization_choices, blank=True)
+    specialization_2 = models.CharField(max_length=20, choices=specialization_choices, blank=True)
+    specialization_3 = models.CharField(max_length=20, choices=specialization_choices, blank=True)
+    specialization_4 = models.CharField(max_length=20, choices=specialization_choices, blank=True)
+    specialization_5 = models.CharField(max_length=20, choices=specialization_choices, blank=True)
+    description = models.TextField(max_length=1000, blank=True)
+    photo = models.ImageField(upload_to='users_photo/', blank=True)
 
     def __str__(self):
         return f'{self.last_name} {self.first_name} {self.middle_name}'
+
+    def full_name(self):
+        return self.__str__
+
+    def last_and_first_name(self):
+        return f'{self.first_name} {self.last_name}'
 
     def short_name(self):
         return f'{self.last_name} {self.first_name[0]}.{self.middle_name[0]}.'
@@ -30,21 +44,15 @@ class UserProfile(models.Model):
 class Question(models.Model):
     author = models.ForeignKey(UserProfile, models.CASCADE)
     status_choices = [
-        ('Нет комментариев', 'Нет комментариев'),
-        ('Не решён', 'Не решён'),
-        ('Решён', 'Решён')
+        ('NK', 'Нет комментариев'),
+        ('NA', 'Не решён'),
+        ('AF', 'Решён')
     ]
     status = models.CharField(max_length=20, choices=status_choices, default='Нет комментариев')
-    title = models.TextField(max_length=150)
+    # title = models.TextField(max_length=150)
     text = models.TextField(max_length=500)
     likes = models.IntegerField(default=0)
-    specialization_choices = [
-        ('Teamlead', 'Teamlead'),
-        ('Backend', 'Backend'),
-        ('Frontend', 'Frontend'),
-        ('Дизайн', 'Дизайн'),
-        ('Аналитика', 'Аналитика'),
-    ]
+    datetime = models.DateTimeField
     specialization_1 = models.CharField(max_length=20, choices=specialization_choices)
     specialization_2 = models.CharField(max_length=20, choices=specialization_choices)
     specialization_3 = models.CharField(max_length=20, choices=specialization_choices)
@@ -53,7 +61,7 @@ class Question(models.Model):
         self.likes += 1
 
     def __str__(self):
-        return f'{self.author.short_name}: {self.title}'
+        return f'№{self.id}{self.author.short_name}: {self.text[:20]}'
 
 
 class Commentary(models.Model):
