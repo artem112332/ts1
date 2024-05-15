@@ -1,10 +1,14 @@
 from django.contrib import admin
 from django.urls import path, include
-from backend.views import *
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('auth_ts1.urls')),
-    path('add_question/', AddQuestion.as_view(), name='add_question'),
+    path('', include('backend.urls')),
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
