@@ -1,19 +1,39 @@
+import datetime
+
 from django.shortcuts import render, redirect
 from rest_framework.decorators import api_view
-from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .forms import QuestionForm, CommentaryForm
 from .models import *
 
 
 def index(request):
-    return render(request, 'index.html')
+    user = request.user
+    return render(request, 'index.html', {'user': user})
 
 
-def profile_page(request):
-    profile = UserProfile.objects.get(user=request.user)
-    return render(request, 'lk.html', {'profile': profile})
+def profile_page(request, user_id):
+    user = request.user
+
+    profile = UserProfile.objects.get(user=User.objects.get(id=user_id))
+    specialization_list = []
+
+    if len(profile.specialization_1) > 1:
+        specialization_list.append(profile.specialization_1)
+    if len(profile.specialization_2) > 1:
+        specialization_list.append(profile.specialization_2)
+    if len(profile.specialization_3) > 1:
+        specialization_list.append(profile.specialization_3)
+    if len(profile.specialization_4) > 1:
+        specialization_list.append(profile.specialization_4)
+    if len(profile.specialization_5) > 1:
+        specialization_list.append(profile.specialization_5)
+
+    return render(request, 'profile.html', {
+        'user': user,
+        'profile': profile,
+        'specialization_list': specialization_list
+    })
 
 
 class ProfileEdit(APIView):
@@ -43,20 +63,50 @@ class ProfileEdit(APIView):
         if request.POST.get('Teamlead') is not None:
             profile.specialization_5 = request.POST.get('Teamlead')
 
+        if request.FILES:
+            file = request.FILES[f'profile{profile.id}_photo']
+            profile.photo = file
+
         profile.save()
-        return render(request, 'lk.html', {'profile': profile})
-
-
-class AddQuestion(APIView):
-    def get(self, request):
-        form = QuestionForm
-        return render(request, 'add_question.html', {'form': form})
-
-    def post(self, request):
-        form = QuestionForm(request.POST)
-        return render(request, 'add_question.html', {'form': form})
+        return redirect(f'/profile/{profile.user.id}/')
 
 
 def questions_page(request):
-    questions = Question.objects.all()
-    return render(request, 'questions.html', {'questions': questions})
+    user = request.user
+
+    questions = Question.objects.all().order_by('-likes', '-datetime')
+    comments = Commentary.objects.all()
+
+    return render(request, 'questions.html', {'user': user, 'questions': questions, 'comments': comments})
+
+
+@api_view(['POST'])
+def add_question(request):
+    author = UserProfile.objects.get(user=request.user)
+    text = request.POST.get('question')
+    Question.objects.create(author=author, text=text, datetime=datetime.datetime.now())
+
+    return redirect('questions')
+
+
+@api_view(['POST'])
+def add_comment(request):
+    author = UserProfile.objects.get(user=request.user)
+    question = Question.objects.get(id=request.POST.get('question_id'))
+    text = request.POST.get('comment')
+    Commentary.objects.create(author=author, text=text, question=question, datetime=datetime.datetime.now())
+
+    if question.comments_count == 0:
+        question.status = 'Не решён'
+
+    question.addComment()
+
+    return redirect('questions')
+
+
+@api_view(['POST'])
+def add_like(request):
+    question_id = request.POST.get('question_id')
+    Question.objects.get(id=question_id).addLike()
+
+    return redirect('questions')
