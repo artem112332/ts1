@@ -1,15 +1,14 @@
-{% load static %}
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JustDoIT</title>
-    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="/static/css/normalize.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css" crossorigin="">
-    <link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/media.css' %}">
-    <link type="Image/x-icon" href="{% static 'img/icon.svg' %}" rel="icon">
+    <link rel="stylesheet" href="/static/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/media.css">
+    <link type="Image/x-icon" href="/static/img/icon.svg" rel="icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
@@ -17,16 +16,16 @@
 <body>
 <header class="header">
     <div class="container header__container flex">
-        <a href="/"><img src="{% static 'img/icon.svg' %}" alt="Лого" class="icon"></a>
+        <a href="/"><img src="/static/img/icon.svg" alt="Лого" class="icon"></a>
         <div class="vertical-line"></div>
         <nav class="header__nav">
             <ul class="header__nav_list list-reset flex">
-                <a href="index.html" class="header__nav_item">Главная</a>
-                <a href="questions.html" class="header__nav_item">Вопросы от проектантов</a>
-                <a href="tutor_cards.html" class="header__nav_item">Карточки наставников</a>
+                <a href="/" class="header__nav_item">Главная</a>
+                <a href="/questions" class="header__nav_item">Вопросы от проектантов</a>
+                <a href="/tutor_cards" class="header__nav_item">Карточки наставников</a>
             </ul>
         </nav>
-        <a href="lk.html" class="header__profile">
+        <a href="/profile/{{ profile.user.id }}" class="header__profile">
             <svg class="profile-avatar" width="24" height="24" viewBox="0 0 24 24" fill="none"
                  xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -41,15 +40,16 @@
 
 <main class="user">
     <div class="container user__container">
-        <div class="user__content flex">
-            <div class="user__avatar">
-                <img id="displayImg" class="user__image" alt="Аватар">
-                <input type="file" id="fileInput" class="avatar-input">
-                <button onclick="uploadPhoto()" class="btn btn-reset avatar-button">Загрузить фото</button>
-            </div>
-            <form method="post" action="{% url 'edit_profile' %}" class="user__input">
-                {% csrf_token %}
+        <form method="post" enctype="multipart/form-data" action="/edit_profile/" class="user__content flex">
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 
+            <div class="user__avatar">
+                <img id="displayImg" class="user__image" alt="Аватар" src="{{ profile.photo.url }}">
+                <input type="file" id="profile{{ profile.id }}_photo" name="profile{{ profile.id }}_photo"
+                       class="avatar-input">
+            </div>
+
+            <div class="user__input">
                 <div class="user__input_top">
                     <label for="last_name" class="user__form_title">Имя</label>
                     <input type="text" id="last_name" name="last_name" class="user__form_input"
@@ -104,25 +104,12 @@
                     </ul>
                 </div>
                 <input type="submit" class="btn btn-reset user__btn" value="Сохранить изменения">
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 </main>
-<script>
-    const photoData = localStorage.getItem('photo');
-    const displayImg = document.getElementById('displayImg');
-    displayImg.src = photoData;
-</script>
-<script>
-    $('input[type=checkbox]').on('change', function (e) {
-        if ($('input[type=checkbox]:checked').length > 3) {
-            $(this).prop('checked', false);
-            alert("allowed only 3");
-        }
-    });
-</script>
-<script src="{% static 'js/swiper-bundle.min.js' %}"></script>
-<script src="{% static 'js/main.js' %}"></script>
-<script src="{% static 'js/script.js' %}"></script>
+<script src="/static/js/swiper-bundle.min.js"></script>
+<script src="/static/js/main.js"></script>
+<script src="/static/js/script.js"></script>
 </body>
 </html>
