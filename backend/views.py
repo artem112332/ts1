@@ -9,7 +9,16 @@ from .models import *
 
 def index(request):
     user = request.user
-    return render(request, 'index.html', {'user': user})
+    questions = Question.objects.filter(status='Не решён')
+    tutors = UserProfile.objects.filter(status='Наставник')
+
+    return render(request, 'index.html', {'user': user, 'questions': questions, 'tutors': tutors})
+
+
+def tutors_page(request):
+    user = request.user
+    tutors = UserProfile.objects.filter(status='Наставник')
+    return render(request, 'tutor_cards.html', {'user': user, 'tutors': tutors})
 
 
 def profile_page(request, user_id):
@@ -75,9 +84,16 @@ def questions_page(request):
     user = request.user
 
     questions = Question.objects.all().order_by('-likes', '-datetime')
-    comments = Commentary.objects.all()
+    comments = Commentary.objects.all().order_by('-likes', '-datetime')
+    user_likes = Like.objects.filter(user=request.user)
+    liked_questions = {like.question: 1 for like in user_likes if like.question is not None}
+    liked_comments = {like.comment: 1 for like in user_likes}
 
-    return render(request, 'questions.html', {'user': user, 'questions': questions, 'comments': comments})
+    return render(request, 'questions.html', {'user': user,
+                                              'questions': questions,
+                                              'comments': comments,
+                                              'liked_questions': liked_questions,
+                                              'liked_comments': liked_comments})
 
 
 @api_view(['POST'])
@@ -105,8 +121,33 @@ def add_comment(request):
 
 
 @api_view(['POST'])
-def add_like(request):
+def like_question(request):
     question_id = request.POST.get('question_id')
-    Question.objects.get(id=question_id).addLike()
+    question = Question.objects.get(id=question_id)
+
+    question.addLike()
+
+    # like = Like.objects.filter(user=request.user, question=question)
+    # if len(like) != 0:
+    #     like.delete()
+    # else:
+    #     Like.objects.create(user=request.user, question=question)
+    #     question.addLike()
+
+    return redirect('questions')
+
+
+@api_view(['POST'])
+def like_comment(request):
+    comment_id = request.POST.get('comment_id')
+    comment = Commentary.objects.get(id=comment_id)
+    comment.addLike()
+
+    # like = Like.objects.filter(user=request.user, comment=comment)
+    # if len(like) != 0:
+    #     like.delete()
+    # else:
+    #     Like.objects.create(user=request.user, comment=comment)
+    #     comment.addLike()
 
     return redirect('questions')
