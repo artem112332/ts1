@@ -79,16 +79,18 @@
 
                 <div class="questions_block__review flex">
                     <div class="questions_block__review_like flex">
-                        <form method="post" action="/add_like/">
+                        <form method="post" action="/like_question/">
                             <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                             <input type="hidden" name="question_id" value="{{ question.id }}">
-                            <button>
+                            <label>
+                                <input type="submit" name="image" hidden>
                                 <svg class="questions_block__review_like_image" width="50" height="47"
                                      viewBox="0 0 50 47"
                                      fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M25.0003 44.4792L21.9795 41.7292C11.2503 32 4.16699 25.5833 4.16699 17.7083C4.16699 11.2917 9.20866 6.25 15.6253 6.25C19.2503 6.25 22.7295 7.9375 25.0003 10.6042C27.2712 7.9375 30.7503 6.25 34.3753 6.25C40.792 6.25 45.8337 11.2917 45.8337 17.7083C45.8337 25.5833 38.7503 32 28.0212 41.75L25.0003 44.4792Z"></path>
                                 </svg>
-                            </button>
+                            </label>
+
                         </form>
                         <p class="questions_block__review_like_count">{{ question.likes }}</p>
                     </div>
@@ -102,6 +104,20 @@
                             <h3 class="comment__list_title">{{ question.comments_count }} комментария</h3>
                             {% for comment in comments %}
                                 {% if comment.question == question %}
+                                    <p class="comment__item__datatime">
+                                        {% if comment.datetime.month < 10 %}
+                                            {{ comment.datetime.day }}.0{{ comment.datetime.month }}.
+                                            {{ comment.datetime.year }}
+                                        {% else %}
+                                            {{ comment.datetime.day }}.{{ comment.datetime.month }}.
+                                            {{ comment.datetime.year }}
+                                        {% endif %}
+                                        {% if comment.datetime.minute < 10 %}
+                                            {{ comment.datetime.hour }}:0{{ comment.datetime.minute }}
+                                        {% else %}
+                                            {{ comment.datetime.hour }}:{{ comment.datetime.minute }}
+                                        {% endif %}
+                                    </p>
                                     <li class="comment__item flex">
                                         <img src="{{ comment.author.photo.url }}" class="comment__item_avatar"
                                              alt="Аватар">
@@ -129,7 +145,7 @@
     </div>
 </section>
 <script>
-    const like = document.querySelectorAll('.questions_block__review_like');
+    const like = document.querySelectorAll('.questions_block__review_like_image');
     like.forEach((element) => {
         element.addEventListener('click', () => {
             if (element.getAttribute('fill') === 'rgba(255, 113, 99, 1)') {
@@ -145,11 +161,21 @@
     var triggerElements = document.querySelectorAll('.comment-text');
 
     triggerElements.forEach(function (triggerElement, index) {
+        var storageKey = 'block_' + index;
+
+        if (localStorage.getItem(storageKey) === 'open') {
+            options[index].style.display = 'block';
+        } else {
+            options[index].style.display = 'none';
+        }
+
         triggerElement.addEventListener('click', function (event) {
             if (options[index].style.display === 'none' || options[index].style.display === '') {
                 options[index].style.display = 'block';
+                localStorage.setItem(storageKey, 'open');
             } else {
                 options[index].style.display = 'none';
+                localStorage.removeItem(storageKey);
             }
         });
     });
@@ -163,6 +189,7 @@
         localStorage.setItem('scrollpos', window.scrollY);
     };
 </script>
+
 <script src="/static/js/swiper-bundle.min.js"></script>
 <script src="/static/js/main.js"></script>
 </body>
