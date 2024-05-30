@@ -1,14 +1,13 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JustDoIT</title>
-    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/media.css' %}">
-    <link type="Image/x-icon" href="{% static 'img/icon.ico' %}" rel="icon">
+    <link rel="stylesheet" href="/static/css/normalize.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/media.css">
+    <link type="Image/x-icon" href="/static/img/icon.svg" rel="icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
@@ -17,7 +16,7 @@
 <main class="main">
     <section id="content" class="content flex">
         <div class="content__left list-reset">
-            <img src="{% static 'img/icon.svg' %}" alt="Лого" class="icon">
+            <img src="/static/img/icon.svg" alt="Лого" class="icon">
             <h1 class="content__left_title">JustDoIT!</h1>
             <p class="content__left_descr">
                 веб-сервис, с помощью которого проектанты
@@ -32,10 +31,11 @@
             <h2 class="content__right_title">Добро пожаловать!</h2>
             <div class="content__form">
                 <form method="post" action="/login/">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                     <div class="content__input">
-                        <label class="content__form_title" for="login">E-mail или номер телефона</label>
-                        <input class="content__form_input" type="text" name="login" id="login"
-                               placeholder="Введите свой e-mail или номер телефона" required>
+                        <label class="content__form_title" for="username">E-mail</label>
+                        <input class="content__form_input" type="text" name="username" id="username"
+                               placeholder="Введите свой e-mail" required>
                         <label class="content__form_title" for="password">Пароль</label>
                         <input class="content__form_input" type="password" name="password" id="password"
                                placeholder="Введите свой пароль" required>
@@ -80,8 +80,8 @@
                         <rect width="23.1818" height="23.1818" fill="white" transform="translate(17 16)"></rect>
                     </clipPath>
                 </defs>
-                </svg>
-                </a>
+
+
                 <div class="flex content__form_link-extra">
                     <span class="no-account">Нет аккаунта?</span>
                     &nbsp;

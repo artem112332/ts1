@@ -1,14 +1,13 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JustDoIT</title>
-    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/media.css' %}">
-    <link type="Image/x-icon" href="{% static 'img/icon.ico' %}" rel="icon">
+    <link rel="stylesheet" href="/static/css/normalize.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/media.css">
+    <link type="Image/x-icon" href="/static/img/icon.svg" rel="icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
@@ -17,7 +16,7 @@
 <main class="main">
     <section id="content" class="content flex">
         <div class="content__left list-reset">
-            <img src="{% static 'img/icon.svg' %}" alt="" class="icon">
+            <img src="/static/img/icon.svg" alt="" class="icon">
             <h1 class="content__left_title">JustDoIT!</h1>
             <p class="content__left_descr">
                 веб-сервис, с помощью которого проектанты
@@ -33,6 +32,8 @@
             <div class="content__form">
                 <div class="input">
                     <form method="post" action="/registration/">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
                         <label for="full_name" class="content__form_title">Фамилия Имя Отчество</label>
                         {% if invalid_full_name %}
                             <span class="registration-content__invalid_input">Неправильно введено ФИО</span>
@@ -60,9 +61,10 @@
                         <span class="registration-content__form_link">Пароль должен быть длиной не менее 8 символов</span>
                         <br>
 
-                        <label class="content__form_title" for="status">Ваш статус</label>
-                        <input type="checkbox" name="status" id="status" value="Mentor">
-                        <label for="status">Я наставник</label>
+                        <div class="content__form_checkbox flex">
+                            <input type="checkbox" id="status" name="status" value="Наставник"/>
+                            <label for="status" class="content__form_checkbox_input">Я наставник</label>
+                        </div>
 
                         <input class="btn btn-reset" type="submit" value="Зарегистрироваться">
                     </form>
