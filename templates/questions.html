@@ -57,16 +57,9 @@
         {% for question in questions %}
             <div class="questions_block">
                 <p class="questions_block__datatime">
-                    {% if question.datetime.month < 10 %}
-                        {{ question.datetime.day }}.0{{ question.datetime.month }}.{{ question.datetime.year }}
-                    {% else %}
-                        {{ question.datetime.day }}.{{ question.datetime.month }}.{{ question.datetime.year }}
-                    {% endif %}
-                    {% if question.datetime.minute < 10 %}
-                        {{ question.datetime.hour }}:0{{ question.datetime.minute }}
-                    {% else %}
-                        {{ question.datetime.hour }}:{{ question.datetime.minute }}
-                    {% endif %}
+                    {% set time=question.datetime.time() %}
+                    {% set date=question.datetime.date() %}
+                    {{ '{}'.format(time) }} {{ '{}'.format(date) }}
                 </p>
 
                 <div class="flex">
@@ -84,13 +77,20 @@
                             <input type="hidden" name="question_id" value="{{ question.id }}">
                             <label>
                                 <input type="submit" name="image" hidden>
-                                <svg class="questions_block__review_like_image" width="50" height="47"
-                                     viewBox="0 0 50 47"
-                                     fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M25.0003 44.4792L21.9795 41.7292C11.2503 32 4.16699 25.5833 4.16699 17.7083C4.16699 11.2917 9.20866 6.25 15.6253 6.25C19.2503 6.25 22.7295 7.9375 25.0003 10.6042C27.2712 7.9375 30.7503 6.25 34.3753 6.25C40.792 6.25 45.8337 11.2917 45.8337 17.7083C45.8337 25.5833 38.7503 32 28.0212 41.75L25.0003 44.4792Z"></path>
-                                </svg>
+                                {% if question in liked_questions %}
+                                    <svg class="questions_block__review_like_image" width="50" height="47"
+                                         viewBox="0 0 50 47"
+                                         fill="rgba(255, 113, 99, 1)" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M25.0003 44.4792L21.9795 41.7292C11.2503 32 4.16699 25.5833 4.16699 17.7083C4.16699 11.2917 9.20866 6.25 15.6253 6.25C19.2503 6.25 22.7295 7.9375 25.0003 10.6042C27.2712 7.9375 30.7503 6.25 34.3753 6.25C40.792 6.25 45.8337 11.2917 45.8337 17.7083C45.8337 25.5833 38.7503 32 28.0212 41.75L25.0003 44.4792Z"></path>
+                                    </svg>
+                                {% else %}
+                                    <svg class="questions_block__review_like_image" width="50" height="47"
+                                         viewBox="0 0 50 47"
+                                         fill="#CAD1E1" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M25.0003 44.4792L21.9795 41.7292C11.2503 32 4.16699 25.5833 4.16699 17.7083C4.16699 11.2917 9.20866 6.25 15.6253 6.25C19.2503 6.25 22.7295 7.9375 25.0003 10.6042C27.2712 7.9375 30.7503 6.25 34.3753 6.25C40.792 6.25 45.8337 11.2917 45.8337 17.7083C45.8337 25.5833 38.7503 32 28.0212 41.75L25.0003 44.4792Z"></path>
+                                    </svg>
+                                {% endif %}
                             </label>
-
                         </form>
                         <p class="questions_block__review_like_count">{{ question.likes }}</p>
                     </div>
@@ -105,18 +105,9 @@
                             {% for comment in comments %}
                                 {% if comment.question == question %}
                                     <p class="comment__item__datatime">
-                                        {% if comment.datetime.month < 10 %}
-                                            {{ comment.datetime.day }}.0{{ comment.datetime.month }}.
-                                            {{ comment.datetime.year }}
-                                        {% else %}
-                                            {{ comment.datetime.day }}.{{ comment.datetime.month }}.
-                                            {{ comment.datetime.year }}
-                                        {% endif %}
-                                        {% if comment.datetime.minute < 10 %}
-                                            {{ comment.datetime.hour }}:0{{ comment.datetime.minute }}
-                                        {% else %}
-                                            {{ comment.datetime.hour }}:{{ comment.datetime.minute }}
-                                        {% endif %}
+                                        {% set time=comment.datetime.time() %}
+                                        {% set date=comment.datetime.date() %}
+                                        {{ '{}'.format(time) }} {{ '{}'.format(date) }}
                                     </p>
                                     <li class="comment__item flex">
                                         <img src="{{ comment.author.photo.url }}" class="comment__item_avatar"
@@ -124,7 +115,32 @@
                                         <div class="comment__item_content">
                                             <p class="comment__item_name">{{ comment.author.last_and_first_name() }}</p>
                                             <p class="comment__item_descr">{{ comment.text }}</p>
-                                            <p class="comment__item_like">Like</p>
+                                            <div class="questions_block__review_like flex">
+                                                <form method="post" action="/like_comment/">
+                                                    <input type="hidden" name="csrfmiddlewaretoken"
+                                                           value="{{ csrf_token }}">
+                                                    <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                                                    <label>
+                                                        <input type="submit" name="image" hidden>
+                                                        {% if comment in liked_comments %}
+                                                            <svg class="questions_block__review_like_image" width="40"
+                                                                 height="37"
+                                                                 viewBox="0 0 50 47" fill="rgba(255, 113, 99, 1)"
+                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M25.0003 44.4792L21.9795 41.7292C11.2503 32 4.16699 25.5833 4.16699 17.7083C4.16699 11.2917 9.20866 6.25 15.6253 6.25C19.2503 6.25 22.7295 7.9375 25.0003 10.6042C27.2712 7.9375 30.7503 6.25 34.3753 6.25C40.792 6.25 45.8337 11.2917 45.8337 17.7083C45.8337 25.5833 38.7503 32 28.0212 41.75L25.0003 44.4792Z"></path>
+                                                            </svg>
+                                                        {% else %}
+                                                            <svg class="questions_block__review_like_image" width="40"
+                                                                 height="37"
+                                                                 viewBox="0 0 50 47" fill="#CAD1E1"
+                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M25.0003 44.4792L21.9795 41.7292C11.2503 32 4.16699 25.5833 4.16699 17.7083C4.16699 11.2917 9.20866 6.25 15.6253 6.25C19.2503 6.25 22.7295 7.9375 25.0003 10.6042C27.2712 7.9375 30.7503 6.25 34.3753 6.25C40.792 6.25 45.8337 11.2917 45.8337 17.7083C45.8337 25.5833 38.7503 32 28.0212 41.75L25.0003 44.4792Z"></path>
+                                                            </svg>
+                                                        {% endif %}
+                                                    </label>
+                                                </form>
+                                                <p class="comment__like_count">{{ comment.likes }}</p>
+                                            </div>
                                         </div>
                                     </li>
                                 {% endif %}
@@ -145,18 +161,6 @@
     </div>
 </section>
 <script>
-    const like = document.querySelectorAll('.questions_block__review_like_image');
-    like.forEach((element) => {
-        element.addEventListener('click', () => {
-            if (element.getAttribute('fill') === 'rgba(255, 113, 99, 1)') {
-                element.setAttribute('fill', '#CAD1E1');
-            } else {
-                element.setAttribute('fill', 'rgba(255, 113, 99, 1)');
-            }
-        });
-        element.setAttribute('fill', '#CAD1E1');
-    });
-
     var options = document.querySelectorAll('.questions_block__review_comment .hidden');
     var triggerElements = document.querySelectorAll('.comment-text');
 
