@@ -497,9 +497,9 @@ body {
 
 .cards__photo {
     margin-top: 10px;
-    max-width: 70%;
-    max-height: 70%;
-    object-fit: contain;
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
     border-radius: 50%;
 }
 
