@@ -17,7 +17,7 @@
 <body>
 <header class="header">
     <div class="container header__container flex">
-        <a href="index.html"><img src="img/icon.svg" alt="Лого" class="icon"></a>
+        <a href="/"><img src="/static/img/icon.svg" alt="Лого" class="icon"></a>
         <div class="vertical-line"></div>
         <nav class="header__nav">
             <ul class="header__nav_list list-reset flex">
@@ -44,17 +44,23 @@
         <h1 class="notices__title">Уведомления</h1>
         <ul class="notices__list list-reset">
             {% for request in requests %}
-            <li class="notices__item flex">
-                <img src="{{ request.author_of_request.photo.url }}" class="notices__item_avatar" alt="Аватар">
-                <div class="notices__item_content">
-                    <p class="notices__item__name">{{ request.author_of_request.last_and_first_name() }}</p>
-                    <p class="notices__item__descr">{{ request.date }},
-                        {{ request.time }}:00 - {{ request.time|int + 1 }}:00</p>
-                </div>
-                <div class="notices__status_accepted">{{ request.status }}</div>
-                <p class="notices__link">{{ request.join_link }}</p>
-            </li>
-            <hr class="body__line">
+                <li class="notices__item flex">
+                    <img src="{{ request.author_of_request.photo.url }}" class="notices__item_avatar" alt="Аватар">
+                    <div class="notices__item_content">
+                        <p class="notices__item__name">{{ request.author_of_request.first_and_last_name() }}</p>
+                        <p class="notices__item__descr">{{ request.date }},
+                            {{ request.time }}:00 - {{ request.time|int + 1 }}:00</p>
+
+                    </div>
+                    <div class="notices__item_content">
+                        <p class="notices__comment">{{ request.commentary }}</p>
+                    </div>
+                    <div class="notices__status_accepted">{{ request.status }}</div>
+                    {% if request.status == 'Принят' %}
+                        <p class="notices__link">{{ request.join_link }}</p>
+                    {% endif %}
+                </li>
+                <hr class="body__line">
             {% endfor %}
         </ul>
     </div>

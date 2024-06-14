@@ -5,6 +5,20 @@ from rest_framework.views import APIView
 from .models import *
 
 
+def index(request):
+    user = request.user
+    questions = Question.objects.all()
+    tutors = UserProfile.objects.filter(status='Наставник')
+
+    return render(request, 'index.html', {'user': user, 'questions': questions, 'tutors': tutors})
+
+
+def tutors_page(request):
+    user = request.user
+    tutors = UserProfile.objects.filter(status='Наставник')
+    return render(request, 'tutor_cards.html', {'user': user, 'tutors': tutors})
+
+
 def get_string_week_dates(base_date, start_day, end_day=None):
     monday = base_date - timedelta(days=base_date.isoweekday() - 1)
     week_dates = [str(monday + timedelta(days=i)).split(sep='-') for i in range(7)]
@@ -15,20 +29,6 @@ def get_week_dates(base_date, start_day, end_day=None):
     monday = base_date - timedelta(days=base_date.isoweekday() - 1)
     week_dates = [monday + timedelta(days=i) for i in range(7)]
     return week_dates[start_day - 1:end_day or start_day]
-
-
-def index(request):
-    user = request.user
-    questions = Question.objects.filter(status='Не решён')
-    tutors = UserProfile.objects.filter(status='Наставник')
-
-    return render(request, 'index.html', {'user': user, 'questions': questions, 'tutors': tutors})
-
-
-def tutors_page(request):
-    user = request.user
-    tutors = UserProfile.objects.filter(status='Наставник')
-    return render(request, 'tutor_cards.html', {'user': user, 'tutors': tutors})
 
 
 def profile_page(request, user_id):
@@ -105,11 +105,13 @@ def send_consult_request(request):
     mentor_id = request.POST.get('mentor')
     mentor_profile = UserProfile.objects.get(user_id=mentor_id)
 
+    comment = request.POST.get('comment')
     date_time = request.POST.get('date_time').split()
     time = date_time[3]
     date_input = date(int(date_time[0]), int(date_time[1]), int(date_time[2]))
 
-    Consultation.objects.create(author_of_request=profile, mentor=mentor_profile, date=date_input, time=time)
+    Consultation.objects.create(author_of_request=profile, mentor=mentor_profile, date=date_input, time=time,
+                                commentary=comment)
 
     return redirect(f'/profile/{mentor_id}/')
 
@@ -271,15 +273,19 @@ def notifications(request):
 
 
 def reply_to_request(request):
+    user = request.user
+    profile = UserProfile.objects.get(user=user)
     consult_request_id = request.POST.get('request_id')
     consultation = Consultation.objects.get(id=consult_request_id)
     link = request.POST.get('link')
     reply = request.POST.get('reply')
-    if reply == 'accept':
+    if reply == 'Принять':
         consultation.join_link = link
         consultation.set_accepted()
     else:
         consultation.set_declined()
+
+    return redirect('notifications')
 
 
 def questions_page(request):

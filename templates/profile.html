@@ -26,7 +26,7 @@
                 <a href="/tutor_cards" class="header__nav_item">Карточки наставников</a>
             </ul>
         </nav>
-        <a href="/profile/{{ profile.user.id }}" class="header__profile">
+        <a href="/profile/{{ user.id }}" class="header__profile">
             <svg class="profile-avatar" width="24" height="24" viewBox="0 0 24 24" fill="none"
                  xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -48,17 +48,22 @@
                     <form action="/edit_profile">
                         <input type="submit" value="Редактировать профиль" class="btn btn-reset user__btn">
                     </form>
+                    <form action="/logout">
+                        <input type="submit" value="Выход" class="btn btn-reset user__btn">
+                    </form>
                 {% endif %}
             </div>
             <div class="user__input">
                 <div class="user__input_top flex">
-                    <h1 class="user__name">{{ profile.last_and_first_name() }}</h1>
-                    <svg onclick="window.location.href='/notifications'" class="notice-btn" width="46" height="46"
-                         viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M46 23C46 35.7025 35.7025 46 23 46C10.2975 46 0 35.7025 0 23C0 10.2975 10.2975 0 23 0C35.7025 0 46 10.2975 46 23Z"></path>
-                        <path d="M19.9444 31.8095H25.0556C25.0556 33.0143 23.9056 34 22.5 34C21.0944 34 19.9444 33.0143 19.9444 31.8095ZM34 29.619V30.7143H11V29.619L13.5556 27.4286V20.8571C13.5556 17.4619 16.1111 14.5048 19.9444 13.519V13.1905C19.9444 11.9857 21.0944 11 22.5 11C23.9056 11 25.0556 11.9857 25.0556 13.1905V13.519C28.8889 14.5048 31.4444 17.4619 31.4444 20.8571V27.4286L34 29.619ZM28.8889 20.8571C28.8889 17.7905 26.0778 15.381 22.5 15.381C18.9222 15.381 16.1111 17.7905 16.1111 20.8571V28.5238H28.8889V20.8571Z"
-                              fill="white"></path>
-                    </svg>
+                    <h1 class="user__name">{{ profile.first_and_last_name() }}</h1>
+                    {% if profile.user == user %}
+                        <svg onclick="window.location.href='/notifications'" class="notice-btn" width="46" height="46"
+                             viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M46 23C46 35.7025 35.7025 46 23 46C10.2975 46 0 35.7025 0 23C0 10.2975 10.2975 0 23 0C35.7025 0 46 10.2975 46 23Z"></path>
+                            <path d="M19.9444 31.8095H25.0556C25.0556 33.0143 23.9056 34 22.5 34C21.0944 34 19.9444 33.0143 19.9444 31.8095ZM34 29.619V30.7143H11V29.619L13.5556 27.4286V20.8571C13.5556 17.4619 16.1111 14.5048 19.9444 13.519V13.1905C19.9444 11.9857 21.0944 11 22.5 11C23.9056 11 25.0556 11.9857 25.0556 13.1905V13.519C28.8889 14.5048 31.4444 17.4619 31.4444 20.8571V27.4286L34 29.619ZM28.8889 20.8571C28.8889 17.7905 26.0778 15.381 22.5 15.381C18.9222 15.381 16.1111 17.7905 16.1111 20.8571V28.5238H28.8889V20.8571Z"
+                                  fill="white"></path>
+                        </svg>
+                    {% endif %}
                 </div>
                 <div class="user__form">
                     <p class="user__form_text">Информация</p>
@@ -70,14 +75,16 @@
                             <p class="user__form_data">{{ profile.user.username }}</p>
                         </div>
                     </div>
-                    <span class="user__form_title">В чём разбираюсь</span>
-                    <div class="flex">
-                        <ul class="list-reset">
-                            {% for specialization in specialization_list %}
-                                <li>{{ specialization }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+                    {% if profile.status == 'Наставник' %}
+                        <span class="user__form_title">В чём разбираюсь</span>
+                        <div class="flex">
+                            <ul class="list-reset">
+                                {% for specialization in specialization_list %}
+                                    <li>{{ specialization }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
                 </div>
                 {% if profile.have_schedule %}
                     <form method="post" action="/send_consult_request/">
@@ -119,11 +126,6 @@
                         </table>
 
                         <div id="timetable_bottom_text" class="user__text_timetable-bottom flex">
-                            {#                            <div id="selected_time" class="timetable_text">#}
-                            {#                                <script>#}
-                            {#                                    document.write(get_selected_time())#}
-                            {#                                </script>#}
-                            {#                            </div>#}
                             <p id="timetable_bottom" class="timetable_text">
                                 В комментарии укажите по какому вопросу вы хотите получить консультацию
                             </p>
@@ -134,7 +136,7 @@
                                 Отправить
                             </button>
                             <label>
-                                <input type="text" placeholder="Добавьте комментарий"
+                                <input type="text" name="comment" placeholder="Добавьте комментарий"
                                        class="user__input_timetable-input"
                                        required>
                             </label>

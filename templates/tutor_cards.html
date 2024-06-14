@@ -53,7 +53,7 @@
                             <div class="tutor_cards__preview_content flex">
                                 <div class="cards__preview_text">
                                     <div class="flex">
-                                        <p class="tutor_cards__preview_name">{{ tutor.last_and_first_name() }}</p>
+                                        <p class="tutor_cards__preview_name">{{ tutor.first_and_last_name() }}</p>
                                     </div>
                                     <p class="tutor_cards__preview_descr">
                                         {% if tutor.specialization_1 != '' %}
@@ -77,7 +77,7 @@
                     </div>
                     <div class="back">
                         <div class="back-content center">
-                            <h2 class="tutor_cards__preview_name">{{ tutor.last_and_first_name() }}</h2>
+                            <h2 class="tutor_cards__preview_name">{{ tutor.first_and_last_name() }}</h2>
                             <p class="tutor_cards__preview_descr">{{ tutor.description }}<p>
                         </div>
                     </div>

@@ -39,8 +39,8 @@ class UserProfile(models.Model):
     def full_name(self):
         return self.__str__
 
-    def last_and_first_name(self):
-        return f'{self.last_name} {self.first_name}'
+    def first_and_last_name(self):
+        return f'{self.first_name} {self.last_name}'
 
     def short_name(self):
         return f'{self.last_name} {self.first_name[0]}.{self.middle_name[0]}.'

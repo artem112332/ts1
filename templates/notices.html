@@ -44,32 +44,31 @@
         <h1 class="notices__title">Уведомления</h1>
         <ul class="notices__list list-reset">
             {% for request in requests %}
-            <li class="notices__item flex">
-                <form method="post" action="/reply_to_request/">
-                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                    <input type="hidden" name="request_id" value="{{ request.id }}">
+                <li class="notices__item flex">
+                    <form class="notices__item flex" method="post" action="/reply_to_request/">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                        <input type="hidden" name="request_id" value="{{ request.id }}">
 
-                    <img src="{{ request.author_of_request.photo.url }}" class="notices__item_avatar" alt="Аватар">
-                    <div class="notices__item_content">
-                        <p class="notices__item__name">{{ request.author_of_request.last_and_first_name() }}</p>
-                        <p class="notices__item__descr">{{ request.date }},
-                            {{ request.time }}:00 - {{ request.time|int + 1 }}:00</p>
-
-                        <div class="notices__item_btns flex">
-                            <input type="submit" class="notices__item_btns-accept" name="reply" value="Принять">
-                            <input type="submit" class="notices__item_btns-reject" name="reply" value="Отклонить">
+                        <img src="{{ request.author_of_request.photo.url }}" class="notices__item_avatar" alt="Аватар">
+                        <div class="notices__item_content">
+                            <p class="notices__item__name">{{ request.author_of_request.first_and_last_name() }}</p>
+                            <p class="notices__item__descr">{{ request.date }},
+                                {{ request.time }}:00 - {{ request.time|int + 1 }}:00</p>
+                            <div class="notices__item_btns flex">
+                                <input type="submit" class="notices__item_btns-accept" name="reply" value="Принять">
+                                <input type="submit" class="notices__item_btns-reject" name="reply" value="Отклонить">
+                            </div>
+                            <p class="notices__comment">{{ request.commentary }}</p>
                         </div>
-                    </div>
-                    <div class="notices__form">
-                        <label>
-                            {{ request.commentary }}
-                            <input required type="text" name="link" placeholder="Вставьте ссылку на консультацию"
-                                   class="notices__input">
-                        </label>
-                    </div>
-                </form>
-            </li>
-            <hr class="header__line">
+                        <div class="notices__form">
+                            <label>
+                                <input required type="text" name="link" placeholder="Вставьте ссылку на консультацию"
+                                       class="notices__input">
+                            </label>
+                        </div>
+                    </form>
+                </li>
+                <hr class="header__line">
             {% endfor %}
         </ul>
     </div>
