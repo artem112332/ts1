@@ -57,22 +57,41 @@
         {% for question in questions %}
             <div class="questions_block">
                 <p class="questions_block__datatime">
-                    {% if question.datetime.minute < 10 %}
-                        {{ question.datetime.hour }}:0{{ question.datetime.minute }}
+                    {% if question.datetime.hour < 10 %}
+                        {% if question.datetime.minute < 10 %}
+                            0{{ question.datetime.hour }}:0{{ question.datetime.minute }}
+                        {% else %}
+                            0{{ question.datetime.hour }}:{{ question.datetime.minute }}
+                        {% endif %}
                     {% else %}
-                        {{ question.datetime.hour }}:{{ question.datetime.minute }}
+                        {% if question.datetime.minute < 10 %}
+                            {{ question.datetime.hour }}:0{{ question.datetime.minute }}
+                        {% else %}
+                            {{ question.datetime.hour }}:{{ question.datetime.minute }}
+                        {% endif %}
                     {% endif %}
-                    {% if question.datetime.month < 10 %}
-                        {{ question.datetime.day }}.0{{ question.datetime.month }}.{{ question.datetime.year }}
+                    {% if question.datetime.day < 10 %}
+                        {% if question.datetime.month < 10 %}
+                            0{{ question.datetime.day }}.0{{ question.datetime.month }}.{{ question.datetime.year }}
+                        {% else %}
+                            0{{ question.datetime.day }}.{{ question.datetime.month }}.{{ question.datetime.year }}
+                        {% endif %}
                     {% else %}
-                        {{ question.datetime.day }}.{{ question.datetime.month }}.{{ question.datetime.year }}
+                        {% if question.datetime.month < 10 %}
+                            {{ question.datetime.day }}.0{{ question.datetime.month }}.{{ question.datetime.year }}
+                        {% else %}
+                            {{ question.datetime.day }}.{{ question.datetime.month }}.{{ question.datetime.year }}
+                        {% endif %}
                     {% endif %}
                 </p>
 
                 <div class="flex">
-                    <img src="{{ question.author.photo.url }}" alt="Аватар" class="questions_block__avatar">
+                    <img src="{{ question.author.photo.url }}"
+                         onclick="window.location.href='/profile/{{ question.author.user_id }}'" alt="Аватар"
+                         class="questions_block__avatar">
                     <div class="questions_block__title">
-                        <p class="questions_block__name">{{ question.author.first_and_last_name() }}</p>
+                        <p onclick="window.location.href='/profile/{{ question.author.user_id }}'"
+                           class="questions_block__name">{{ question.author.first_and_last_name() }}</p>
                         <p class="questions_block__descr">{{ question.text }}</p>
                     </div>
                 </div>
@@ -112,22 +131,44 @@
                             {% for comment in comments %}
                                 {% if comment.question == question %}
                                     <p class="comment__item__datatime">
-                                        {% if comment.datetime.minute < 10 %}
-                                            {{ comment.datetime.hour }}:0{{ comment.datetime.minute }}
+                                        {% if comment.datetime.hour < 10 %}
+                                            {% if comment.datetime.minute < 10 %}
+                                                0{{ comment.datetime.hour }}:0{{ comment.datetime.minute }}
+                                            {% else %}
+                                                0{{ comment.datetime.hour }}:{{ comment.datetime.minute }}
+                                            {% endif %}
                                         {% else %}
-                                            {{ comment.datetime.hour }}:{{ comment.datetime.minute }}
+                                            {% if comment.datetime.minute < 10 %}
+                                                {{ comment.datetime.hour }}:0{{ comment.datetime.minute }}
+                                            {% else %}
+                                                {{ comment.datetime.hour }}:{{ comment.datetime.minute }}
+                                            {% endif %}
                                         {% endif %}
-                                        {% if comment.datetime.month < 10 %}
-                                            {{ comment.datetime.day }}.0{{ comment.datetime.month }}.{{ comment.datetime.year }}
+                                        {% if comment.datetime.day < 10 %}
+                                            {% if comment.datetime.month < 10 %}
+                                                0{{ comment.datetime.day }}.0{{ comment.datetime.month }}.
+                                                {{ comment.datetime.year }}
+                                            {% else %}
+                                                0{{ comment.datetime.day }}.{{ comment.datetime.month }}.
+                                                {{ comment.datetime.year }}
+                                            {% endif %}
                                         {% else %}
-                                            {{ comment.datetime.day }}.{{ comment.datetime.month }}.{{ comment.datetime.year }}
+                                            {% if comment.datetime.month < 10 %}
+                                                {{ comment.datetime.day }}.0{{ comment.datetime.month }}.
+                                                {{ comment.datetime.year }}
+                                            {% else %}
+                                                {{ comment.datetime.day }}.{{ comment.datetime.month }}.
+                                                {{ comment.datetime.year }}
+                                            {% endif %}
                                         {% endif %}
                                     </p>
                                     <li class="comment__item flex">
-                                        <img src="{{ comment.author.photo.url }}" class="comment__item_avatar"
+                                        <img onclick="window.location.href='/profile/{{ comment.author.user_id }}'"
+                                             src="{{ comment.author.photo.url }}" class="comment__item_avatar"
                                              alt="Аватар">
                                         <div class="comment__item_content">
-                                            <p class="comment__item_name">{{ comment.author.first_and_last_name() }}</p>
+                                            <p onclick="window.location.href='/profile/{{ comment.author.user_id }}'"
+                                               class="comment__item_name">{{ comment.author.first_and_last_name() }}</p>
                                             <p class="comment__item_descr">{{ comment.text }}</p>
                                             <div class="questions_block__review_like flex">
                                                 <form method="post" action="/like_comment/">

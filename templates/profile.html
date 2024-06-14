@@ -67,15 +67,17 @@
                 </div>
                 <div class="user__form">
                     <p class="user__form_text">Информация</p>
-                    <span class="user__form_title">Обо мне</span>
-                    <p class="user__form_data">{{ profile.description }}</p>
+                    {% if profile.description|length > 0 %}
+                        <span class="user__form_title">Обо мне</span>
+                        <p class="user__form_data">{{ profile.description }}</p>
+                    {% endif %}
                     <div class="flex">
                         <div class="user__form_input_left">
                             <span class="user__form_title">Email</span>
                             <p class="user__form_data">{{ profile.user.username }}</p>
                         </div>
                     </div>
-                    {% if profile.status == 'Наставник' %}
+                    {% if profile.status == 'Наставник' and profile.get_specializations()|length > 0 %}
                         <span class="user__form_title">В чём разбираюсь</span>
                         <div class="flex">
                             <ul class="list-reset">

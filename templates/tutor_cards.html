@@ -56,21 +56,8 @@
                                         <p class="tutor_cards__preview_name">{{ tutor.first_and_last_name() }}</p>
                                     </div>
                                     <p class="tutor_cards__preview_descr">
-                                        {% if tutor.specialization_1 != '' %}
-                                            {{ tutor.specialization_1 }}
-                                        {% endif %}
-                                        {% if tutor.specialization_2 != '' %}
-                                            , {{ tutor.specialization_2 }}
-                                        {% endif %}
-                                        {% if tutor.specialization_3 != '' %}
-                                            , {{ tutor.specialization_3 }}
-                                        {% endif %}
-                                        {% if tutor.specialization_4 != '' %}
-                                            , {{ tutor.specialization_4 }}
-                                        {% endif %}
-                                        {% if tutor.specialization_5 != '' %}
-                                            , {{ tutor.specialization_5 }}
-                                        {% endif %}
+                                        {% set specializations = tutors_specializations[tutor] %}
+                                        {{ specializations }}
                                 </div>
                             </div>
                         </article>

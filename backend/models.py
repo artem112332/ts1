@@ -29,6 +29,16 @@ class UserProfile(models.Model):
     description = models.TextField(max_length=1000, blank=True)
     photo = models.ImageField(upload_to='users_photo/', blank=True, default='default_avatar.jpeg')
 
+    def get_specializations(self):
+        specializations = []
+        if self.specialization_1 != '': specializations.append(self.specialization_1)
+        if self.specialization_2 != '': specializations.append(self.specialization_2)
+        if self.specialization_3 != '': specializations.append(self.specialization_3)
+        if self.specialization_4 != '': specializations.append(self.specialization_4)
+        if self.specialization_5 != '': specializations.append(self.specialization_5)
+
+        return specializations
+
     def addSchedule(self):
         self.have_schedule = True
         self.save()

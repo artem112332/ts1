@@ -16,7 +16,12 @@ def index(request):
 def tutors_page(request):
     user = request.user
     tutors = UserProfile.objects.filter(status='Наставник')
-    return render(request, 'tutor_cards.html', {'user': user, 'tutors': tutors})
+    tutors_specializations = {tutor: ', '.join(tutor.get_specializations()) for tutor in tutors}
+    return render(request, 'tutor_cards.html', {
+        'user': user,
+        'tutors': tutors,
+        'tutors_specializations': tutors_specializations
+    })
 
 
 def get_string_week_dates(base_date, start_day, end_day=None):
