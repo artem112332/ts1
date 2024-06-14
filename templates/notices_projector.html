@@ -43,7 +43,7 @@
     <div class="container notices__container">
         <h1 class="notices__title">Запросы на консультацию</h1>
         {% if requests|length == 0 %}
-            <p class="notices__item__descr" align="center">У вас нет запросов на консультацию</p>
+            <p class="notices__item__descr" align="center">Вы не отправляли запросы на консультацию</p>
         {% endif %}
         <ul class="notices__list list-reset">
             {% for request in requests %}

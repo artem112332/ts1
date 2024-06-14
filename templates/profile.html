@@ -78,7 +78,7 @@
                         </div>
                     </div>
                     {% if profile.status == 'Наставник' and profile.get_specializations()|length > 0 %}
-                        <span class="user__form_title">В чём разбираюсь</span>
+                        <span class="user__form_title">Компетенции</span>
                         <div class="flex">
                             <ul class="list-reset">
                                 {% for specialization in specialization_list %}

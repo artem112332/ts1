@@ -144,7 +144,21 @@ class ProfileEdit(APIView):
                 'вс.': week_dates[6]
             }
 
-            schedule, created = Week.objects.get_or_create(user=user, is_schedule=True)
+            if profile.have_schedule:
+                schedule = Week.objects.get(user=user, is_schedule=True)
+            else:
+                schedule = Week.objects.create(
+                    user=profile.user,
+                    is_schedule=True,
+                    monday=Day.objects.create(user=profile.user),
+                    tuesday=Day.objects.create(user=profile.user),
+                    wednesday=Day.objects.create(user=profile.user),
+                    thursday=Day.objects.create(user=profile.user),
+                    friday=Day.objects.create(user=profile.user),
+                    saturday=Day.objects.create(user=profile.user),
+                    sunday=Day.objects.create(user=profile.user)
+                )
+                profile.have_schedule = True
 
             schedule_dict = {
                 'Понедельник': schedule.monday.get_times(),

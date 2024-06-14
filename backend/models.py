@@ -209,6 +209,9 @@ class Day(models.Model):
         }
         return times
 
+    def __str__(self):
+        return f'id: {self.id} {self.date} {self.user} day'
+
 
 def get_default_times():
     times = {str(i): 'Недоступно' for i in range(9, 22)}
@@ -218,10 +221,17 @@ def get_default_times():
 class Week(models.Model):
     user = models.ForeignKey(User, models.CASCADE, related_name='+')
     is_schedule = models.BooleanField(default=False)
-    monday = models.OneToOneField(Day, models.CASCADE, related_name='+', null=True, default=Day.get_default_pk)
-    tuesday = models.OneToOneField(Day, models.CASCADE, related_name='+', null=True, default=Day.get_default_pk)
-    wednesday = models.OneToOneField(Day, models.CASCADE, related_name='+', null=True, default=Day.get_default_pk)
-    thursday = models.OneToOneField(Day, models.CASCADE, related_name='+', null=True, default=Day.get_default_pk)
-    friday = models.OneToOneField(Day, models.CASCADE, related_name='+', null=True, default=Day.get_default_pk)
-    saturday = models.OneToOneField(Day, models.CASCADE, related_name='+', null=True, default=Day.get_default_pk)
-    sunday = models.OneToOneField(Day, models.CASCADE, related_name='+', null=True, default=Day.get_default_pk)
+    monday = models.OneToOneField(Day, models.CASCADE, related_name='week_monday', null=True,
+                                  default=Day.get_default_pk)
+    tuesday = models.OneToOneField(Day, models.CASCADE, related_name='week_tuesday', null=True,
+                                   default=Day.get_default_pk)
+    wednesday = models.OneToOneField(Day, models.CASCADE, related_name='week_wednesday', null=True,
+                                     default=Day.get_default_pk)
+    thursday = models.OneToOneField(Day, models.CASCADE, related_name='week_thursday', null=True,
+                                    default=Day.get_default_pk)
+    friday = models.OneToOneField(Day, models.CASCADE, related_name='week_friday', null=True,
+                                  default=Day.get_default_pk)
+    saturday = models.OneToOneField(Day, models.CASCADE, related_name='week_saturday', null=True,
+                                    default=Day.get_default_pk)
+    sunday = models.OneToOneField(Day, models.CASCADE, related_name='week_sunday', null=True,
+                                  default=Day.get_default_pk)
