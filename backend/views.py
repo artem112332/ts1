@@ -158,7 +158,6 @@ class ProfileEdit(APIView):
                     saturday=Day.objects.create(user=profile.user),
                     sunday=Day.objects.create(user=profile.user)
                 )
-                profile.have_schedule = True
 
             schedule_dict = {
                 'Понедельник': schedule.monday.get_times(),
@@ -213,7 +212,6 @@ class ProfileEdit(APIView):
 
             if request.POST.get('want_consult') is not None:
                 if not profile.have_schedule:
-                    Week.objects.create(user=user, is_schedule=True)
                     profile.have_schedule = True
 
                 schedule = Week.objects.get(user=user, is_schedule=True)

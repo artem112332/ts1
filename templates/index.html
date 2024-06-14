@@ -48,7 +48,8 @@
 
                 <ul class="cards__list list-reset flex swiper-wrapper">
                     {% for tutor in tutors %}
-                        <li onclick="window.location.href='/profile/{{ tutor.user_id }}'" class="cards__item swiper-slide">
+                        <li onclick="window.location.href='/profile/{{ tutor.user_id }}'"
+                            class="cards__item swiper-slide">
                             <article class="cards__preview">
                                 <div class="cards__preview_image">
                                     <img src="{{ tutor.photo.url }}" alt="Аватар" class="cards__photo">
@@ -56,6 +57,8 @@
                                 <div class="cards__preview_content flex">
                                     <div class="cards__preview_text">
                                         <p class="cards__preview_name">{{ tutor.first_and_last_name() }}</p>
+                                        <p class="cards__preview_descr">{{ tutor.status }}</p>
+                                        <br>
                                         <p class="cards__preview_descr">{{ tutor.description }}</p>
                                     </div>
                                 </div>
@@ -64,14 +67,15 @@
                     {% endfor %}
                 </ul>
             </div>
-            <div class="swiper-button-prev">
-                <i class="ri-arrow-left-s-line"></i>
-            </div>
-            <div class="swiper-button-next">
-                <i class="ri-arrow-right-s-line"></i>
-            </div>
             <div class="swiper-pagination"></div>
         </div>
+        <div class="swiper-button-prev">
+            <i class="ri-arrow-left-s-line"></i>
+        </div>
+        <div class="swiper-button-next">
+            <i class="ri-arrow-right-s-line"></i>
+        </div>
+        <div class="swiper-pagination"></div>
     </section>
 
     <section id="questions" class="questions">
@@ -85,7 +89,7 @@
                         <li class="questions__item swiper-slide" onclick="window.location.href='/questions/'">
                             <p class="questions__item_question">{{ question.text }}</p>
                             <div class="questions__item_author flex">
-                                <img src="{{ question.author.photo.url }}" alt="Аватар" class="questions_block__avatar" >
+                                <img src="{{ question.author.photo.url }}" alt="Аватар" class="questions_block__avatar">
                                 <div class="questions__item_author_info">
                                     <p class="questions__name">{{ question.author.first_and_last_name() }}</p>
                                     <p class="questions__direction">{{ question.author.status }}</p>
