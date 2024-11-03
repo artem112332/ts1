@@ -37,10 +37,11 @@
 
 <hr class="horizontal-line">
 
+<!-- Поиск + фильтрация -->
 <section id="search" class="search">
     <div class="container search__container flex">
         <form action="#" class="search__form">
-            <input type="text" placeholder="Поиск" class="search__input">
+            <input class="search__input" type="text" placeholder="Поиск">
         </form>
 
         <button class="filter" id="myBtn"><img src="../static/img/filter.svg" alt=""></button>
@@ -95,7 +96,7 @@
                     <div class="front">
                         <article class="tutor_cards__preview">
                             <div class="tutor_cards__preview_image">
-                                <img src="{{ tutor.photo.url }}" alt="avatar" class="cards__photo">
+                                <img src="{{ tutor.photo.url }}" alt="avatar" class="tutor_cards__photo">
                             </div>
                             <div class="tutor_cards__preview_content flex">
                                 <div class="cards__preview_text">
@@ -120,7 +121,7 @@
         </ul>
     </div>
 
-    <button class="btn btn-reset btn_more">Показать ещё</button>
+    <button type="submit" class="btn btn-reset btn_more">Показать ещё</button>
 </section>
 
 <script src="/static/js/swiper-bundle.min.js"></script>
