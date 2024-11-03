@@ -161,11 +161,6 @@
         });
     });
 
-    {#function get_selected_time() {#}
-    {#    const checkedBoxes = document.querySelectorAll('input[name=date_time]:checked');#}
-    {#    return checkedBoxes[0].value;#}
-
-
     const checkboxes = document.querySelectorAll('.timetable__body_cell input[type="checkbox"]');
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', () => {
