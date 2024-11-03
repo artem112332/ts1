@@ -45,13 +45,13 @@
         max-width: 1116px;
     }
 
-    .content__left {
+    /* .content__left {
         padding: 50px;
-    }
+    } */
 
-    .content__right {
+    /* .content__right {
         padding: 80px 0 20px 125px;
-    }
+    } */
 
     .content__left_title {
         font-size: 35px;
