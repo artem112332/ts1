@@ -7,9 +7,9 @@
         padding: 30px 35px;
     }
 
-    .cards__preview_image {
+    /* .cards__preview_image {
         height: auto;
-    }
+    } */
 
     .cards__item {
         min-height: 425px;
@@ -73,9 +73,9 @@
         font-size: 25px;
     }
 
-    .content__form_link-extra {
+    /* .content__form_link-extra {
         margin-top: 20px;
-    }
+    } */
 
     .google-icon {
         margin-top: 15px;
