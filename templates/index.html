@@ -56,7 +56,7 @@
                             class="cards__item swiper-slide">
                             <article class="cards__preview">
                                 <div class="cards__preview_image">
-                                    <img src="{{ tutor.photo.url }}" alt="Аватар" class="cards__photo">
+                                    <img class="cards__photo" src="{{ tutor.photo.url }}" alt="Аватар">
                                 </div>
                                 <div class="cards__preview_content flex">
                                     <div class="cards__preview_text">
@@ -71,8 +71,10 @@
                     {% endfor %}
                 </ul>
             </div>
+        
             <div class="swiper-pagination"></div>
         </div>
+        
         <div class="swiper-button-prev">
             <i class="ri-arrow-left-s-line"></i>
         </div>
@@ -80,6 +82,7 @@
             <i class="ri-arrow-right-s-line"></i>
         </div>
         <div class="swiper-pagination"></div>
+
     </section>
 
     <section id="questions" class="questions">
