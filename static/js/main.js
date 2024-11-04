@@ -56,7 +56,6 @@ popupClose = document.querySelector('.close');
 
 popupToggle.onclick = function() {
     popup.style.display = "block";
-    popup.style.backgroundColor = "rgba(0, 0, 0, 0.2)";
 };
 
 popupClose.onclick = function() {
