@@ -55,16 +55,19 @@ popupToggle = document.getElementById('myBtn'),
 popupClose = document.querySelector('.close');
 
 popupToggle.onclick = function() {
-    popup.style.display = "block"
+    popup.style.display = "block";
+    popup.style.backgroundColor = "rgba(0, 0, 0, 0.2)";
 };
 
 popupClose.onclick = function() {
     popup.style.display = "none"
+    location.reload();
 };
 
 window.onclick = function(e) {
     if (e.target == popup) {
         popup.style.display = "none";
+        location.reload();
     }
 }
 
