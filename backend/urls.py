@@ -7,7 +7,7 @@ urlpatterns = [
     path('notifications/', notifications, name='notifications'),
     path('reply_to_request/', reply_to_request),
     path('edit_profile/', ProfileEdit.as_view()),
-    path('tutor_cards/', tutors_page),
+    path('tutor_cards/', Tutors.as_view()),
     path('questions/', questions_page, name='questions'),
     path('add_question/', add_question),
     path('add_comment/', add_comment),

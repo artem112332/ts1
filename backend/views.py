@@ -13,15 +13,51 @@ def index(request):
     return render(request, 'index.html', {'user': user, 'questions': questions, 'tutors': tutors})
 
 
-def tutors_page(request):
-    user = request.user
-    tutors = UserProfile.objects.filter(status='Наставник')
-    tutors_specializations = {tutor: ', '.join(tutor.get_specializations()) for tutor in tutors}
-    return render(request, 'tutor_cards.html', {
-        'user': user,
-        'tutors': tutors,
-        'tutors_specializations': tutors_specializations
-    })
+class Tutors(APIView):
+    def get(self, request):
+        user = request.user
+        tutors = UserProfile.objects.filter(status='Наставник')
+        tutors_specializations = {tutor: ', '.join(tutor.get_specializations()) for tutor in tutors}
+        filters = 5 * ['']
+
+        return render(request, 'tutor_cards.html', {
+            'user': user,
+            'tutors': tutors,
+            'tutors_specializations': tutors_specializations,
+            'filters': filters
+        })
+
+    def post(self, request):
+        user = request.user
+
+        filters = 5 * ['']
+        if request.POST.get('Аналитика') is not None: filters[0] = 'Аналитика'
+        if request.POST.get('Дизайн') is not None: filters[1] = 'Дизайн'
+        if request.POST.get('Frontend') is not None: filters[2] = 'Frontend'
+        if request.POST.get('Backend') is not None: filters[3] = 'Backend'
+        if request.POST.get('Teamlead') is not None: filters[4] = 'Teamlead'
+
+        tutors = UserProfile.objects.filter(status='Наставник')
+
+        if filters[0] != '':
+            tutors = tutors.filter(specialization_1=filters[0])
+        if filters[1] != '':
+            tutors = tutors.filter(specialization_2=filters[1])
+        if filters[2] != '':
+            tutors = tutors.filter(specialization_3=filters[2])
+        if filters[3] != '':
+            tutors = tutors.filter(specialization_4=filters[3])
+        if filters[4] != '':
+            tutors = tutors.filter(specialization_5=filters[4])
+
+        tutors_specializations = {tutor: ', '.join(tutor.get_specializations()) for tutor in tutors}
+
+        return render(request, 'tutor_cards.html', {
+            'user': user,
+            'tutors': tutors,
+            'tutors_specializations': tutors_specializations,
+            'filters': filters
+        })
 
 
 def get_string_week_dates(base_date, start_day, end_day=None):
@@ -290,8 +326,6 @@ def notifications(request):
 
 
 def reply_to_request(request):
-    user = request.user
-    profile = UserProfile.objects.get(user=user)
     consult_request_id = request.POST.get('request_id')
     consultation = Consultation.objects.get(id=consult_request_id)
     link = request.POST.get('link')

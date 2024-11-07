@@ -27,9 +27,12 @@
             </ul>
         </nav>
         <a href="/profile/{{ user.id }}" class="header__profile profile">
-            <svg class="profile__avatar" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 13C8.13401 13 5 16.134 5 20V22C5 22.5523 4.55228 23 4 23C3.44772 23 3 22.5523 3 22V20C3 15.0294 7.02944 11 12 11C16.9706 11 21 15.0294 21 20V22C21 22.5523 20.5523 23 20 23C19.4477 23 19 22.5523 19 22V20C19 16.134 15.866 13 12 13Z"></path>
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11ZM12 13C15.3137 13 18 10.3137 18 7C18 3.68629 15.3137 1 12 1C8.68629 1 6 3.68629 6 7C6 10.3137 8.68629 13 12 13Z"></path>
+            <svg class="profile__avatar" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M12 13C8.13401 13 5 16.134 5 20V22C5 22.5523 4.55228 23 4 23C3.44772 23 3 22.5523 3 22V20C3 15.0294 7.02944 11 12 11C16.9706 11 21 15.0294 21 20V22C21 22.5523 20.5523 23 20 23C19.4477 23 19 22.5523 19 22V20C19 16.134 15.866 13 12 13Z"></path>
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11ZM12 13C15.3137 13 18 10.3137 18 7C18 3.68629 15.3137 1 12 1C8.68629 1 6 3.68629 6 7C6 10.3137 8.68629 13 12 13Z"></path>
             </svg>
         </a>
     </div>
@@ -51,38 +54,59 @@
                     <h3 class="popup__header">ФИЛЬТР</h3>
                     <span class="close">&times;</span>
                 </div>
-                <div class="popup__body">
+                <form method="post" class="popup__body">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                     <ul class="popup__list list-reset">
                         <li class="popup__item flex">
-                            <input id="scales" type="checkbox" class="filter__checkbox">
-                            <p class="filter__name">Аналитика</p>
-                            <span class="filter__count">96</span>
+                            {% if filters[0] == '' %}
+                                <input name="Аналитика" id="scales1" type="checkbox" class="filter__checkbox">
+                            {% else %}
+                                <input name="Аналитика" id="scales1" type="checkbox" class="filter__checkbox" checked>
+                            {% endif %}
+                            <label for="scales1" class="filter__name">Аналитика</label>
+                            {#                            <span class="filter__count">96</span>#}
                         </li>
                         <li class="popup__item flex">
-                            <input id="scales" type="checkbox" class="filter__checkbox">
-                            <p class="filter__name">Дизайн</p>
-                            <span class="filter__count">71</span>
+                            {% if filters[1] == '' %}
+                                <input name="Дизайн" id="scales2" type="checkbox" class="filter__checkbox">
+                            {% else %}
+                                <input name="Дизайн" id="scales2" type="checkbox" class="filter__checkbox" checked>
+                            {% endif %}
+                            <label for="scales2" class="filter__name">Дизайн</label>
+                            {#                            <span class="filter__count">71</span>#}
                         </li>
                         <li class="popup__item flex">
-                            <input id="scales" type="checkbox" class="filter__checkbox">
-                            <p class="filter__name">Frontend</p>
-                            <span class="filter__count">55</span>
+                            {% if filters[2] == '' %}
+                                <input name="Frontend" id="scales3" type="checkbox" class="filter__checkbox">
+                            {% else %}
+                                <input name="Frontend" id="scales3" type="checkbox" class="filter__checkbox" checked>
+                            {% endif %}
+                            <label for="scales3" class="filter__name">Frontend</label>
+                            {#                            <span class="filter__count">55</span>#}
                         </li>
                         <li class="popup__item flex">
-                            <input id="scales" type="checkbox" class="filter__checkbox">
-                            <p class="filter__name">Backend</p>
-                            <span class="filter__count">54</span>
+                            {% if filters[3] == '' %}
+                                <input name="Backend" id="scales4" type="checkbox" class="filter__checkbox">
+                            {% else %}
+                                <input name="Backend" id="scales4" type="checkbox" class="filter__checkbox" checked>
+                            {% endif %}
+                            <label for="scales4" class="filter__name">Backend</label>
+                            {#                            <span class="filter__count">54</span>#}
                         </li>
                         <li class="popup__item flex">
-                            <input id="scales" type="checkbox" class="filter__checkbox">
-                            <p class="filter__name">Team-leader</p>
-                            <span class="filter__count">49</span>
+                            {% if filters[4] == '' %}
+                                <input name="Teamlead" id="scales5" type="checkbox" class="filter__checkbox">
+                            {% else %}
+                                <input name="Teamlead" id="scales5" type="checkbox" class="filter__checkbox" checked>
+                            {% endif %}
+                            <label for="scales5" class="filter__name">Teamlead</label>
+                            {#                            <span class="filter__count">49</span>#}
                         </li>
                     </ul>
                     <hr class="popup__line">
-                    <span class="popup__text">Найдено 126 карточек</span>
+                    {#                    <span class="popup__text">Найдено 126 карточек</span>#}
                     <button class="btn btn-reset popup__btn">Применить</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -120,8 +144,6 @@
             {% endfor %}
         </ul>
     </div>
-
-    <button type="submit" class="btn btn-reset btn_more">Показать ещё</button>
 </section>
 
 <script src="/static/js/swiper-bundle.min.js"></script>
