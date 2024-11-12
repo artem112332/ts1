@@ -42,35 +42,51 @@
             <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 
             <div class="user__avatar">
-                <img id="displayImg" class="user__image" alt="Аватар" src="{{ profile.photo.url }}">
-                <input type="file" id="profile{{ profile.id }}_photo" name="profile{{ profile.id }}_photo"
-                       class="avatar-input">
+                <img class="user__image" id="displayImg" alt="Аватар" src="{{ profile.photo.url }}">
+                <input type="file" id="profile{{ profile.id }}_photo" name="profile{{ profile.id }}_photo" class="user__avatar_input">
             </div>
 
             <div class="user__input">
                 <div class="user__input_top">
-                    <label for="last_name" class="user__form_title">Имя</label>
-                    <input type="text" id="last_name" name="last_name" class="user__form_input"
-                           placeholder="Введи свою фамилию" required value="{{ profile.last_name }}">
+                    <div class="user__data">
+                        <label for="last_name" class="user__form_title">Фамилия</label>
+                        <input type="text" id="last_name" name="last_name" class="user__form_input" placeholder="Введи свою фамилию" required value="{{ profile.last_name }}">
+                    </div>
 
-                    <label for="first_name" class="user__form_title">Имя</label>
-                    <input type="text" id="first_name" name="first_name" class="user__form_input"
-                           placeholder="Введи своё имя" required value="{{ profile.first_name }}">
+                    <div class="user__data">
+                        <label for="first_name" class="user__form_title">Имя</label>
+                        <input type="text" id="first_name" name="first_name" class="user__form_input" placeholder="Введи своё имя" required value="{{ profile.first_name }}">
+                    </div>
 
-                    <label for="middle_name" class="user__form_title">Имя</label>
-                    <input type="text" id="middle_name" name="middle_name" class="user__form_input"
-                           placeholder="Введи своё отчество" required value="{{ profile.middle_name }}">
+                    <div class="user__data">
+                        <label for="middle_name" class="user__form_title">Отчество</label>
+                        <input type="text" id="middle_name" name="middle_name" class="user__form_input placeholder="Введи своё отчество" required value="{{ profile.middle_name }}">
+                    </div>
                 </div>
                 <div class="user__form">
-                    <p class="user__form_text">Информация</p>
+                    <p class="user__form_info">Информация</p>
 
-                    <label for="description" class="user__form_title">Расскажи о себе</label>
-                    <input type="text" id="description" name="description" class="user__form_input"
-                           placeholder="Опиши свои умения" value="{{ profile.description }}">
+                    <div class="user__data">
+                        <label for="description" class="user__form_title">Напиши свои компетенции</label>
+                        <input type="text" id="skills" name="skills" class="user__form_input" placeholder="Опиши свои умения" value="">
+                    </div>
 
-                    <label for="email" class="user__form_title">email</label>
-                    <input type="email" id="email" name="email" class="user__form_input"
-                           placeholder="Введите свой e-mail" value="{{ profile.user.username }}" required>
+                    <div class="user__data flex">
+                        <div class="user__data_left">
+                            <span class="user__form_title">Telegram</span>
+                            <input type="text" id="telegram" name="telegram" class="user__form_input" placeholder="Введите свой e-mail" value="https://t.me/evseykina" required>
+                        </div>
+
+                        <div class="user__data_right">
+                            <span class="user__form_title">Email</span>
+                            <input type="email" id="email" name="email" class="user__form_input" placeholder="Введите свой e-mail" value="{{ profile.user.username }}" required>
+                        </div>
+                    </div>
+
+                    <div class="user__data">
+                        <label for="description" class="user__form_title">Расскажи о себе</label>
+                        <input type="text" id="description" name="description" class="user__form_input" placeholder="Опиши свои умения" value="{{ profile.description }}">
+                    </div>
 
                     {% if is_mentor %}
                         <span class="user__form_title">Род  деятельности</span>
@@ -127,7 +143,7 @@
                             </li>
                         </ul>
                         </div>
-
+                        <!--
                         <div class="user__form">
                             <p id="timetable_text" class="consult_question">
                                 У вас есть возможность проводить консультации для проектантов
@@ -186,7 +202,7 @@
                                     </tr>
                                 {% endfor %}
                             </table>
-                        </div>
+                        </div>-->
                     {% endif %}
 
                 <input type="submit" class="btn btn-reset user__btn" value="Сохранить изменения">
@@ -194,7 +210,7 @@
         </form>
     </div>
 </main>
-<script>
+<!-- <script>
     const div = document.getElementById('want_consult');
     const checkbox = document.getElementById('consult_checkbox')
     if (checkbox.checked)
@@ -211,7 +227,7 @@
     }
 
     document.getElementById('consult_checkbox').onchange = toggle;
-</script>
+</script> -->
 <script src="/static/js/swiper-bundle.min.js"></script>
 <script src="/static/js/main.js"></script>
 <script src="/static/js/script.js"></script>
