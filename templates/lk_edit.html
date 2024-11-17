@@ -66,20 +66,15 @@
                 <div class="user__form">
                     <p class="user__form_info">Информация</p>
 
-                    <div class="user__data">
-                        <label for="description" class="user__form_title">Напиши свои компетенции</label>
-                        <input type="text" id="skills" name="skills" class="user__form_input" placeholder="Опиши свои умения" value="">
-                    </div>
+{#                    <div class="user__data">#}
+{#                        <label for="description" class="user__form_title">Напиши свои компетенции</label>#}
+{#                        <input type="text" id="skills" name="skills" class="user__form_input" placeholder="Опиши свои умения" value="">#}
+{#                    </div>#}
 
                     <div class="user__data flex">
                         <div class="user__data_left">
                             <span class="user__form_title">Telegram</span>
                             <input type="text" id="telegram" name="telegram" class="user__form_input" placeholder="Введите свой e-mail" value="https://t.me/evseykina" required>
-                        </div>
-
-                        <div class="user__data_right">
-                            <span class="user__form_title">Email</span>
-                            <input type="email" id="email" name="email" class="user__form_input" placeholder="Введите свой e-mail" value="{{ profile.user.username }}" required>
                         </div>
                     </div>
 
@@ -89,7 +84,7 @@
                     </div>
 
                     {% if is_mentor %}
-                        <span class="user__form_title">Род  деятельности</span>
+                        <span class="user__form_title">Компетенции</span>
                         <ul class="user__area list-reset">
                             <li class="user_item flex">
                                 {% if profile.specialization_1 == 'Аналитика' %}
