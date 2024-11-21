@@ -81,7 +81,6 @@
         <div class="swiper-button-next">
             <i class="ri-arrow-right-s-line"></i>
         </div>
-        <div class="swiper-pagination"></div>
 
     </section>
 
@@ -96,7 +95,7 @@
                         <li class="questions__item swiper-slide" onclick="window.location.href='/questions/'">
                             <p class="questions__item_question">{{ question.text }}</p>
                             <div class="questions__item_author flex">
-                                <img src="{{ question.author.photo.url }}" alt="Аватар" class="questions_block__avatar">
+                                <img src="{{ question.author.photo.url }}" class="questions_block__avatar" alt="Аватар">
                                 <div class="questions__item_author_info">
                                     <p class="questions__name">{{ question.author.first_and_last_name() }}</p>
                                     <p class="questions__direction">{{ question.author.status }}</p>
