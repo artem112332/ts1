@@ -3,9 +3,9 @@
         max-width: 1000px;
     }
 
-    .cards__preview_content {
+    /* .cards__preview_content {
         padding: 30px 35px;
-    }
+    } */
 
     /* .cards__preview_image {
         height: auto;
@@ -81,7 +81,7 @@
         margin-top: 15px;
     }
 
-    .swiper-button-prev {
+    /* .swiper-button-prev {
         margin-left: 200px;
     }
     
@@ -92,7 +92,7 @@
     .swiper-button-next,
     .swiper-button-prev {
         margin-top: 125px;
-    }
+    } */
 
     .swiper-questions-button-prev {
         margin-left: 200px;
