@@ -15,6 +15,7 @@ class UserProfile(models.Model):
     last_name = models.CharField(max_length=50)  # Фамилия
     first_name = models.CharField(max_length=50)  # Имя
     middle_name = models.CharField(max_length=50)  # Отчество
+    telegram = models.CharField(max_length=50)
     status_choises = [
         ('Проектант', 'Проектант'),
         ('Наставник', 'Наставник')

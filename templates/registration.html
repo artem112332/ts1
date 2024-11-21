@@ -41,30 +41,29 @@
                         <input class="content__form_input" type="text" name="full_name" id="full_name"
                                placeholder="Введите своё ФИО" required>
 
-                        <label for="login" class="content__form_title">E-mail или номер телефона</label>
+                        <label for="login" class="content__form_title">Логин</label>
                         {% if username_taken %}
                             <span class="registration-content__invalid_input">
-                                Пользователь с данным email-адресом или номером телефона уже зарегистрирован
+                                Пользователь с данным логином уже зарегистрирован
                             </span>
                         {% endif %}
                         <input class="content__form_input" type="text" name="login" id="login"
-                               placeholder="Введите свой e-mail или номер телефона" required>
+                               placeholder="Придумайте логин" required>
 
                         <label class="content__form_title" for="password">Пароль</label>
                         {% if short_password %}
                             <span class="registration-content__invalid_input">Пароль слишком короткий</span>
                         {% endif %}
                         <input class="content__form_input" type="password" name="password" id="password"
-                               placeholder="Введите свой пароль"
+                               placeholder="Придумайте пароль"
                                required>
 
                         <span class="registration-content__form_link">Пароль должен быть длиной не менее 8 символов</span>
-                        <br>
 
-                        <div class="content__form_checkbox flex">
-                            <input type="checkbox" id="status" name="status" value="Наставник"/>
-                            <label for="status" class="content__form_checkbox_input">Я наставник</label>
-                        </div>
+{#                        <div class="content__form_checkbox flex">#}
+{#                            <input type="checkbox" id="status" name="status" value="Наставник"/>#}
+{#                            <label for="status" class="content__form_checkbox_input">Я наставник</label>#}
+{#                        </div>#}
 
                         <input class="btn btn-reset" type="submit" value="Зарегистрироваться">
                     </form>
