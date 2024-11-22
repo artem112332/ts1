@@ -319,7 +319,7 @@ def notifications(request):
         })
 
     requests = Consultation.objects.filter(author_of_request=profile)
-    return render(request, 'notices_projector.html', {
+    return render(request, 'notifications.html', {
         'user': user,
         'requests': requests
     })

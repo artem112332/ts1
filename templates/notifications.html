@@ -63,37 +63,32 @@
 
 <section class="notices">
     <div class="container notices__container">
-        <h1 class="notices__title">Запросы на консультацию</h1>
+        <!-- <h1 class="notices__title">Запросы на консультацию</h1> -->
+        <h1 class="notices__title">Уведомления</h1>
+
         <!-- {% if requests|length == 0 %}
-            <p class="notices__item__descr" align="center">У вас нет запросов на консультацию</p>
+            <p class="notices__item__descr" align="center">Вы не отправляли запросы на консультацию</p>
         {% endif %} -->
+
         <!-- <ul class="notices__list list-reset">
             {% for request in requests %}
                 <li class="notices__item flex">
-                    <form class="notices__item flex" method="post" action="/reply_to_request/">
-                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                        <input type="hidden" name="request_id" value="{{ request.id }}">
+                    <img src="{{ request.author_of_request.photo.url }}" class="notices__item_avatar" alt="Аватар">
+                    <div class="notices__item_content">
+                        <p class="notices__item__name">{{ request.author_of_request.first_and_last_name() }}</p>
+                        <p class="notices__item__descr">{{ request.date }},
+                            {{ request.time }}:00 - {{ request.time|int + 1 }}:00</p>
 
-                        <img src="{{ request.author_of_request.photo.url }}" class="notices__item_avatar" alt="Аватар">
-                        <div class="notices__item_content">
-                            <p class="notices__item__name">{{ request.author_of_request.first_and_last_name() }}</p>
-                            <p class="notices__item__descr">{{ request.date }},
-                                {{ request.time }}:00 - {{ request.time|int + 1 }}:00</p>
-                            <div class="notices__item_btns flex">
-                                <input type="submit" class="notices__item_btns-accept" name="reply" value="Принять">
-                                <input type="submit" class="notices__item_btns-reject" name="reply" value="Отклонить">
-                            </div>
-                            <p class="notices__comment">{{ request.commentary }}</p>
-                        </div>
-                        <div class="notices__form">
-                            <label>
-                                <input required type="text" name="link" placeholder="Вставьте ссылку на консультацию"
-                                       class="notices__input">
-                            </label>
-                        </div>
-                    </form>
+                    </div>
+                    <div class="notices__item_content">
+                        <p class="notices__comment">{{ request.commentary }}</p>
+                    </div>
+                    <div class="notices__status_accepted">{{ request.status }}</div>
+                    {% if request.status == 'Принят' %}
+                        <p class="notices__link">{{ request.join_link }}</p>
+                    {% endif %}
                 </li>
-                <hr class="header__line">
+                <hr class="body__line">
             {% endfor %}
         </ul> -->
 
@@ -103,14 +98,20 @@
                 <div class="notices__item_content">
                     <p class="notices__item__name">Дмитриев Даниил</p>
                     <p class="notices__item__descr">Описание заявки</p>
+                    <a class="notices__item_btns-accept" href="">Завершить</a>
                 </div>
-                <a href="#" class="notice_accept">Принять</a>
-                <a href="#" class="notice_reject">Отклонить</a>
-                <div class="notices__form">
-                    <input type="text" placeholder="Комментарий" class="notices__input">
+                 <div class="notices__form">
+                    <input class="notices__input" required type="text" placeholder="Оставить отзыв">
+                    <div class="notices__input_stars">
+                        <img src="../static/img/Star.jpg">
+                        <img src="../static/img/Star.jpg">
+                        <img src="../static/img/Star.jpg">
+                        <img src="../static/img/Star.jpg">
+                        <img src="../static/img/Star.jpg">
+                    </div>
                 </div>
             </li>
-            <hr class="header__line">
+            <hr class="body__line">
         </ul>
     </div>
 </section>

@@ -24,6 +24,7 @@
                 <a href="/" class="header__item">Главная</a>
                 <a href="/questions" class="header__item">Заявки от проектантов</a>
                 <a href="/tutor_cards" class="header__item">Карточки консультантов</a>
+                <a href="/notifications" class="header__item">Мои заявки<sup class="notifications-counter">0</sup></a>
             </ul>
         </nav>
         <a href="/profile/{{ user.id }}" class="header__profile profile">
@@ -35,40 +36,33 @@
                       d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11ZM12 13C15.3137 13 18 10.3137 18 7C18 3.68629 15.3137 1 12 1C8.68629 1 6 3.68629 6 7C6 10.3137 8.68629 13 12 13Z"></path>
             </svg>
         </a>
+        
+        <!-- <a href="/profile/{{ user.id }}" class="header__profile profile">
+            <img class="user__image" src="{{ profile.photo.url }}" alt="Аватар" style="width: 50px; height: 50px;">
+        </a> -->
 
-        {% if profile.user == user %}
-            <a href="/logout" class="header_exit">
-                <svg class="profile_exit" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                     version="1.1" width="45" height="45" viewBox="100 45 150 300" xml:space="preserve">
+        <a href="/logout" class="header_exit">
+            <svg class="profile_exit" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="45" height="45" viewBox="100 45 150 300" xml:space="preserve">
                 <g transform="matrix(6.25 0 0 6.25 240.13 200)" id="logout">
-                <line style="stroke-width: 2; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;"
-                      x1="-6.500000000000001" y1="0" x2="6.500000000000001" y2="0"/>
+                    <line style="stroke-width: 2; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" x1="-6.500000000000001" y1="0" x2="6.500000000000001" y2="0"/>
                 </g>
-                    <g transform="matrix(6.25 0 0 6.25 199.56 200)" id="logout">
-                <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill-rule: nonzero; opacity: 1;"
-                      transform=" translate(-15.93, -16)"
-                      d="M 23.93 25 v 3 h -16 V 4 h 16 V 7 h 2 V 3 a 1 1 0 0 0 -1 -1 h -18 a 1 1 0 0 0 -1 1 V 29 a 1 1 0 0 0 1 1 h 18 a 1 1 0 0 0 1 -1 V 25 Z"
-                      stroke-linecap="round"/>
+                <g transform="matrix(6.25 0 0 6.25 199.56 200)" id="logout">
+                    <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill-rule: nonzero; opacity: 1;" transform=" translate(-15.93, -16)" d="M 23.93 25 v 3 h -16 V 4 h 16 V 7 h 2 V 3 a 1 1 0 0 0 -1 -1 h -18 a 1 1 0 0 0 -1 1 V 29 a 1 1 0 0 0 1 1 h 18 a 1 1 0 0 0 1 -1 V 25 Z" stroke-linecap="round"/>
                 </g>
-                    <g transform="matrix(6.25 0 0 6.25 268.25 212.5)" id="logout">
-                <line style="stroke-width: 2; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;"
-                      x1="2" y1="-2" x2="-2" y2="2"/>
+                <g transform="matrix(6.25 0 0 6.25 268.25 212.5)" id="logout">
+                    <line style="stroke-width: 2; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" x1="2" y1="-2" x2="-2" y2="2"/>
                 </g>
-                    <g transform="matrix(6.25 0 0 6.25 268.25 187.5)" id="logout">
-                <line style="stroke-width: 2; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;"
-                      x1="2" y1="2" x2="-2" y2="-2"/>
+                <g transform="matrix(6.25 0 0 6.25 268.25 187.5)" id="logout">
+                    <line style="stroke-width: 2; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" x1="2" y1="2" x2="-2" y2="-2"/>
                 </g>
-                    <g transform="matrix(6.25 0 0 6.25 255.75 144.31)" id="logout">
-                <line style="stroke-width: 2; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;"
-                      x1="0" y1="1" x2="0" y2="-1"/>
+                <g transform="matrix(6.25 0 0 6.25 255.75 144.31)" id="logout">
+                    <line style="stroke-width: 2; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" x1="0" y1="1" x2="0" y2="-1"/>
                 </g>
-                    <g transform="matrix(6.25 0 0 6.25 255.75 256.25)" id="logout">
-                <line style="stroke-width: 2; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;"
-                      x1="0" y1="1" x2="0" y2="-1"/>
+                <g transform="matrix(6.25 0 0 6.25 255.75 256.25)" id="logout">
+                    <line style="stroke-width: 2; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" x1="0" y1="1" x2="0" y2="-1"/>
                 </g>
             </svg>
-            </a>
-        {% endif %}
+        </a>
     </div>
 </header>
 
@@ -79,24 +73,19 @@
         <div class="user__content flex">
             <div class="user__avatar">
                 <img class="user__image" src="{{ profile.photo.url }}" alt="Аватар">
-                <!-- {% if profile.user == user %}
-                    <form action="/logout">
-                        <input class="btn btn-reset user__btn" type="submit" value="Выход">
-                    </form>
-                {% endif %} -->
             </div>
 
             <div class="user__info">
                 <div class="user__info_top flex">
                     <h1 class="user__name">{{ profile.first_and_last_name() }}</h1>
-                    {% if profile.user == user %}
+                    <!-- {% if profile.user == user %}
                         <svg onclick="window.location.href='/notifications'" class="notice-btn" width="46" height="46"
                              viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M46 23C46 35.7025 35.7025 46 23 46C10.2975 46 0 35.7025 0 23C0 10.2975 10.2975 0 23 0C35.7025 0 46 10.2975 46 23Z"></path>
                             <path d="M19.9444 31.8095H25.0556C25.0556 33.0143 23.9056 34 22.5 34C21.0944 34 19.9444 33.0143 19.9444 31.8095ZM34 29.619V30.7143H11V29.619L13.5556 27.4286V20.8571C13.5556 17.4619 16.1111 14.5048 19.9444 13.519V13.1905C19.9444 11.9857 21.0944 11 22.5 11C23.9056 11 25.0556 11.9857 25.0556 13.1905V13.519C28.8889 14.5048 31.4444 17.4619 31.4444 20.8571V27.4286L34 29.619ZM28.8889 20.8571C28.8889 17.7905 26.0778 15.381 22.5 15.381C18.9222 15.381 16.1111 17.7905 16.1111 20.8571V28.5238H28.8889V20.8571Z"
                                   fill="white"></path>
                         </svg>
-                    {% endif %}
+                    {% endif %} -->
                 </div>
 
                 <div class="user__form">
@@ -124,6 +113,11 @@
                                 <a href="https://t.me/{{ profile.user.username }}">@{{ profile.user.username }}</a>
                             </p>
                         </div>
+
+                        <div class="user__data_right">
+                            <span class="user__form_title">Email</span>
+                            <p class="user__form_data">{{ profile.user.username }}</p>
+                        </div>
                     </div>
 
                     <div class="user__data">
@@ -134,16 +128,22 @@
                     </div>
                 </div>
 
-                <!-- <div class="user__projects">
-                    <p class="user__form_projects">Проекты для консультирования</p>
-                </div> -->
-
                 {% if profile.user == user %}
                     <form action="/edit_profile">
                         <input class="btn btn-reset user__btn" type="submit" value="Редактировать профиль">
                     </form>
                 {% endif %}
+
+                {% if profile.user != user %}
+                    <form action="/application">
+                        <input class="btn btn-reset user__btn" type="submit" value="Отправить заявку">
+                    </form>
+                {% endif %}
             </div>
+
+            <!-- <div class="user__projects">
+                <p class="user__form_projects">Проекты для консультирования</p>
+            </div> -->
 
             <!-- {% if profile.have_schedule %}
         <form method="post" action="/send_consult_request/">
@@ -206,6 +206,20 @@
         </div>
     </div>
 </main>
+<!-- <script>
+    let counter = 0;
+
+    function updateCounter() {
+        counter++;
+        const notificationElement = document.querySelector('.header__item sup');
+        if (notificationElement) {
+            notificationElement.textContent = counter;
+        } else {
+            console.error("Элемент с классом 'header__item sup' не найден.");
+        }
+    }
+    document.addEventListener('click', updateCounter);
+</script> -->
 
 <!-- <script>
     document.querySelectorAll('.timetable__body_cell').forEach(td => {
@@ -233,5 +247,6 @@
 </script> -->
 <script src="/static/js/swiper-bundle.min.js"></script>
 <script src="/static/js/main.js"></script>
+<script src="/static/js/script.js"></script>
 </body>
 </html>
