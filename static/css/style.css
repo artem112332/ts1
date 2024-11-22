@@ -1336,8 +1336,36 @@ input[type="checkbox"]:checked {
     line-height: 20px;
 }
 
+.notice_accept {
+    margin: 0;
+    margin-right: 30px;
+    padding: 15px 16px;
+    min-width: 150px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    outline: 2px solid #C3EEB3;
+    border-radius: 16px;
+    color: #C3EEB3;
+}
+
+.notice_reject {
+    margin: 0;
+    margin-right: 30px;
+    padding: 15px 16px;
+    min-width: 150px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    outline: 2px solid #FFA5A4;
+    border-radius: 16px;
+    color: #FFA5A4;
+}
+
 .notices__item_btns-accept {
-    color: rgba(195, 238, 179, 1);
+    color: #C3EEB3;
     transition: color 0.2s ease-in-out;
 }
 
@@ -1347,7 +1375,7 @@ input[type="checkbox"]:checked {
 }
 
 .notices__item_btns-accept:hover {
-    color: rgb(100, 228, 54);
+    color: rgb(100, 228, 54);;
 }
 
 .notices__item_btns-accept:active {
@@ -1383,12 +1411,19 @@ input[type="checkbox"]:checked {
     font-weight: 500;
     font-size: 14px;
     line-height: 24px;
-    color: rgba(119, 126, 144, 1);
-    background-color: rgb(243, 242, 242);
-    border-radius: 12px;
+    color: #000;
+    border: 2px solid #E6E8EC;
+    border-radius: 16px;
     box-shadow: 0 0 10px #d7d6d6;
     width: 100%;
-    border: none;
+}
+
+.notices__input_stars {
+    margin-top: 15px;
+    padding: 0px 130px;
+    border: 2px solid #FFE586;
+    border-radius: 16px;
+    width: 100%;
 }
 
 .notices__input:focus {
@@ -1506,6 +1541,15 @@ input[type="checkbox"]:checked {
     outline: 2px solid rgba(255, 229, 134, 1);
 }
 
+/* notifications */
+.notifications-counter {
+    vertical-align: top;
+    padding: 3px 5px;
+    background-color: #FF9661;
+    color: #fff;
+    border-radius: 50%;
+}
+  
 /* user */
 .user__content {
     margin-top: 80px;
@@ -1569,6 +1613,10 @@ input[type="checkbox"]:checked {
     margin-left: 20px;
 }
 
+.user__data input {
+    color: #000;
+}
+
 .user__form_data {
     margin: 0;
     padding: 12px 16px;
@@ -1585,7 +1633,6 @@ input[type="checkbox"]:checked {
     border-radius: 12px;
     min-width: 300px;
 }
-
 
 .user__name {
     margin: 0;
@@ -1794,7 +1841,7 @@ input[type="checkbox"]:checked {
     height: initial;
     font-size: 3rem;
     position: absolute;
-    margin-top: 250px;
+    margin-top: 125px;
     color: rgba(255, 237, 173, 1);
     transition: color 0.2s ease-in-out;
 }
