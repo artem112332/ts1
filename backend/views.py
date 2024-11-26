@@ -410,3 +410,7 @@ def like_comment(request):
         comment.addLike()
 
     return redirect('questions')
+
+
+def application_form(request):
+    return render(request, 'application.html')

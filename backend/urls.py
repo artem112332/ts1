@@ -13,4 +13,5 @@ urlpatterns = [
     path('add_comment/', add_comment),
     path('like_question/', like_question),
     path('like_comment/', like_comment),
+    path('application/', application_form),
 ]
