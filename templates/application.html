@@ -61,57 +61,56 @@
 
 <hr class="horizontal-line">
 
-<section class="notices">
-    <div class="container notices__container">
-        <h1 class="notices__title">Запросы на консультацию</h1>
-        <!-- {% if requests|length == 0 %}
-            <p class="notices__item__descr" align="center">У вас нет запросов на консультацию</p>
-        {% endif %} -->
-        <!-- <ul class="notices__list list-reset">
-            {% for request in requests %}
-                <li class="notices__item flex">
-                    <form class="notices__item flex" method="post" action="/reply_to_request/">
-                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                        <input type="hidden" name="request_id" value="{{ request.id }}">
-
-                        <img src="{{ request.author_of_request.photo.url }}" class="notices__item_avatar" alt="Аватар">
-                        <div class="notices__item_content">
-                            <p class="notices__item__name">{{ request.author_of_request.first_and_last_name() }}</p>
-                            <p class="notices__item__descr">{{ request.date }},
-                                {{ request.time }}:00 - {{ request.time|int + 1 }}:00</p>
-                            <div class="notices__item_btns flex">
-                                <input type="submit" class="notices__item_btns-accept" name="reply" value="Принять">
-                                <input type="submit" class="notices__item_btns-reject" name="reply" value="Отклонить">
-                            </div>
-                            <p class="notices__comment">{{ request.commentary }}</p>
-                        </div>
-                        <div class="notices__form">
-                            <label>
-                                <input required type="text" name="link" placeholder="Вставьте ссылку на консультацию"
-                                       class="notices__input">
-                            </label>
-                        </div>
-                    </form>
-                </li>
-                <hr class="header__line">
-            {% endfor %}
-        </ul> -->
-
-        <ul class="notices__list list-reset">
-            <li class="notices__item flex">
-                <img src="../static/img/default_avatar.jpeg" class="notices__item_avatar" alt="Аватар">
-                <div class="notices__item_content">
-                    <p class="notices__item__name">Дмитриев Даниил</p>
-                    <p class="notices__item__descr">Описание заявки</p>
+<!-- Форма для отправки заявки -->
+<section class="application">
+    <div class="container application__container">
+        <div class="application__content">
+            <h1 class="application__title">Оставь свою заявку</h1>
+            
+            <form class="application__form" action="">
+                <div class="application__data">
+                    <label class="application__label">Фамилия и имя</label>
+                    <input type="text" class="application__input" placeholder="Введите свое ФИ" required>
                 </div>
-                <a href="#" class="notice_accept">Принять</a>
-                <a href="#" class="notice_reject">Отклонить</a>
-                <div class="notices__form">
-                    <input type="text" placeholder="Комментарий" class="notices__input">
+
+                <div class="application__data">
+                    <label class="application__label">фамилия и имя консультанта (необязательно)</label>
+                    <input type="text" class="application__input" placeholder="Введите ФИ консультанта">
                 </div>
-            </li>
-            <hr class="header__line">
-        </ul>
+
+                <div class="application__data">
+                    <label class="application__label">Компетенции консультанта (необязательно)</label>
+                    <input type="text" class="application__input" placeholder="Введите компетенции консультанта">
+                </div>
+
+                <div class="application__data">
+                    <label class="application__label">Тема вопроса</label>
+                    <input type="text" class="application__input" placeholder="Введите тему вопроса" required>
+                </div>
+
+                <div class="application__data">
+                    <label class="application__label">подробное описание вопроса</label>
+                    <input type="text" class="application__input" placeholder="Введите описание вопроса" required>
+                </div>
+
+                <div class="application__data">
+                    <label class="application__label">Вложения</label>
+                    <img src="../static/img/attachment.png" class="application__attachment">
+                    <input type="file" id="file-upload" class="application__input application__input_file" multiple required>
+                </div>
+
+                <div class="application__data flex">
+                    <input class="application__checkbox" name="send_to_mentor" type="checkbox">
+                    <p class="application__checkbox_text">Отправить лично консультанту</p>
+                </div>
+            </form>
+
+            <form method="post" action="/add_question/" class="application__question flex">
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                <input name="question" type="text" placeholder="Кто-нибудь обязательно поможет" class="questions-list__write_input">
+                <button type="submit" class="btn btn-reset questions__btn">Оставить<img class="questions__btn_image" src="/static/img/line.png"></button>
+            </form>
+        </div>
     </div>
 </section>
 

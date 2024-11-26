@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/static/css/swiper-bundle.min.css">
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/media.css">
-    <link type="Image/x-icon" href="/static/img/icon.svg" rel="icon">
+    <link type="image/x-icon" href="/static/img/icon.ico?v=2" rel="icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
@@ -34,8 +34,8 @@
                 </svg>
             </a>
 
-            <a href="/logout" class="header_exit">
-                <svg class="profile_exit" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="45" height="45" viewBox="100 45 150 300" xml:space="preserve">
+            <a href="/logout" class="profile__exit">
+                <svg class="profile__exit_icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="45" height="45" viewBox="100 45 150 300" xml:space="preserve">
                     <g transform="matrix(6.25 0 0 6.25 240.13 200)" id="logout">
                         <line style="stroke-width: 2; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" x1="-6.500000000000001" y1="0" x2="6.500000000000001" y2="0"/>
                     </g>
@@ -61,22 +61,25 @@
 
 <hr class="horizontal-line">
 
-<section id="questions_list" class="questions_list">
-    <div class="container questions_list__container">
-        <div class="questions_list__write">
-            <h3 class="questions_list__write_title">Задай свой вопрос</h3>
-            <form method="post" action="/add_question/" class="questions_list__write_form flex">
+<section id="questions-list" class="questions-list">
+    <div class="container questions-list__container">
+        <form action="#" class="search__form">
+            <img src="../static/img/search.png" alt="Поиск" class="search__icon">
+            <input class="search__input" type="text" placeholder="Поиск">
+        </form>
+
+        <div class="questions-list__write">
+            <h3 class="questions-list__write_title">Оставь свою заявку</h3>
+            <form method="post" action="/add_question/" class="questions-list__write_form flex">
                 <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                <input name="question" type="text"
-                       placeholder="Опиши свою проблему. Кто-нибудь обязательно поможет"
-                       class="questions_list__write_input">
-                <button type="submit" class="btn btn-reset">Опубликовать!</button>
+                <input name="question" type="text" placeholder="Опиши свою проблему. Кто-нибудь обязательно поможет" class="questions-list__write_input">
+                <button type="submit" class="btn btn-reset questions__btn">Оставить<img class="questions__btn_image" src="/static/img/line.png"></button>
             </form>
         </div>
 
         {% for question in questions %}
-            <div class="questions_block">
-                <p class="questions_block__datatime">
+            <div class="questions-block">
+                <p class="questions-block__datatime">
                     {% if question.datetime.hour < 10 %}
                         {% if question.datetime.minute < 10 %}
                             0{{ question.datetime.hour }}:0{{ question.datetime.minute }}
@@ -106,31 +109,32 @@
                 </p>
 
                 <div class="flex">
-                    <img src="{{ question.author.photo.url }}"
+                    <!-- <img src="{{ question.author.photo.url }}"
                          onclick="window.location.href='/profile/{{ question.author.user_id }}'" alt="Аватар"
-                         class="questions_block__avatar">
-                    <div class="questions_block__title">
+                         class="questions-block__avatar"> -->
+                    <div class="questions-block__title">
                         <p onclick="window.location.href='/profile/{{ question.author.user_id }}'"
-                           class="questions_block__name">{{ question.author.first_and_last_name() }}</p>
-                        <p class="questions_block__descr">{{ question.text }}</p>
+                           class="questions-block__name">{{ question.author.first_and_last_name() }}</p>
+                        <p class="questions-block__theme">Тема вопроса</p>
+                        <p class="questions-block__descr">{{ question.text }}</p>
                     </div>
                 </div>
 
-                <div class="questions_block__review flex">
-                    <div class="questions_block__review_like flex">
+                <!-- <div class="questions-block__review flex">
+                    <div class="questions-block__review_like flex">
                         <form method="post" action="/like_question/">
                             <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                             <input type="hidden" name="question_id" value="{{ question.id }}">
                             <label>
                                 <input type="submit" name="image" hidden>
                                 {% if question in liked_questions %}
-                                    <svg class="questions_block__review_like_image" width="50" height="47"
+                                    <svg class="questions-block__review_like_image" width="50" height="47"
                                          viewBox="0 0 50 47"
                                          fill="rgba(255, 113, 99, 1)" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M25.0003 44.4792L21.9795 41.7292C11.2503 32 4.16699 25.5833 4.16699 17.7083C4.16699 11.2917 9.20866 6.25 15.6253 6.25C19.2503 6.25 22.7295 7.9375 25.0003 10.6042C27.2712 7.9375 30.7503 6.25 34.3753 6.25C40.792 6.25 45.8337 11.2917 45.8337 17.7083C45.8337 25.5833 38.7503 32 28.0212 41.75L25.0003 44.4792Z"></path>
                                     </svg>
                                 {% else %}
-                                    <svg class="questions_block__review_like_image" width="50" height="47"
+                                    <svg class="questions-block__review_like_image" width="50" height="47"
                                          viewBox="0 0 50 47"
                                          fill="#CAD1E1" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M25.0003 44.4792L21.9795 41.7292C11.2503 32 4.16699 25.5833 4.16699 17.7083C4.16699 11.2917 9.20866 6.25 15.6253 6.25C19.2503 6.25 22.7295 7.9375 25.0003 10.6042C27.2712 7.9375 30.7503 6.25 34.3753 6.25C40.792 6.25 45.8337 11.2917 45.8337 17.7083C45.8337 25.5833 38.7503 32 28.0212 41.75L25.0003 44.4792Z"></path>
@@ -138,13 +142,13 @@
                                 {% endif %}
                             </label>
                         </form>
-                        <p class="questions_block__review_like_count">{{ question.likes }}</p>
+                        <p class="questions-block__review_like_count">{{ question.likes }}</p>
                     </div>
-                    <div class="questions_block__review_comment">
+                    <div class="questions-block__review_comment">
                         <div class="flex">
                             <span class="comment-text">Комментарии:</span>
                             &ensp;
-                            <p class="questions_block__review_comment_count">{{ question.comments_count }}</p>
+                            <p class="questions-block__review_comment_count">{{ question.comments_count }}</p>
                         </div>
                         <ul class="comment__list list-reset hidden">
                             <h3 class="comment__list_title">{{ question.comments_count }} комментария</h3>
@@ -190,7 +194,7 @@
                                             <p onclick="window.location.href='/profile/{{ comment.author.user_id }}'"
                                                class="comment__item_name">{{ comment.author.first_and_last_name() }}</p>
                                             <p class="comment__item_descr">{{ comment.text }}</p>
-                                            <div class="questions_block__review_like flex">
+                                            <div class="questions-block__review_like flex">
                                                 <form method="post" action="/like_comment/">
                                                     <input type="hidden" name="csrfmiddlewaretoken"
                                                            value="{{ csrf_token }}">
@@ -198,14 +202,14 @@
                                                     <label>
                                                         <input type="submit" name="image" hidden>
                                                         {% if comment in liked_comments %}
-                                                            <svg class="questions_block__review_like_image" width="40"
+                                                            <svg class="questions-block__review_like_image" width="40"
                                                                  height="37"
                                                                  viewBox="0 0 50 47" fill="rgba(255, 113, 99, 1)"
                                                                  xmlns="http://www.w3.org/2000/svg">
                                                                 <path d="M25.0003 44.4792L21.9795 41.7292C11.2503 32 4.16699 25.5833 4.16699 17.7083C4.16699 11.2917 9.20866 6.25 15.6253 6.25C19.2503 6.25 22.7295 7.9375 25.0003 10.6042C27.2712 7.9375 30.7503 6.25 34.3753 6.25C40.792 6.25 45.8337 11.2917 45.8337 17.7083C45.8337 25.5833 38.7503 32 28.0212 41.75L25.0003 44.4792Z"></path>
                                                             </svg>
                                                         {% else %}
-                                                            <svg class="questions_block__review_like_image" width="40"
+                                                            <svg class="questions-block__review_like_image" width="40"
                                                                  height="37"
                                                                  viewBox="0 0 50 47" fill="#CAD1E1"
                                                                  xmlns="http://www.w3.org/2000/svg">
@@ -220,23 +224,23 @@
                                     </li>
                                 {% endif %}
                             {% endfor %}
-                            <form method="post" action="/add_comment/" class="questions_list__write_form flex">
+                            <form method="post" action="/add_comment/" class="questions-list__write_form flex">
                                 <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                                 <input type="hidden" name="question_id" value="{{ question.id }}">
                                 <input type="text" name="comment" placeholder="Опубликуй свой ответ"
-                                       class="questions_list__write_input">
+                                       class="questions-list__write_input">
                                 <button type="submit" class="btn btn-reset">Опубликовать!</button>
                             </form>
                         </ul>
                     </div>
-                </div>
+                </div> -->
             </div>
             <hr class="header__line">
         {% endfor %}
     </div>
 </section>
-<script>
-    var options = document.querySelectorAll('.questions_block__review_comment .hidden');
+<!-- <script>
+    var options = document.querySelectorAll('.questions-block__review_comment .hidden');
     var triggerElements = document.querySelectorAll('.comment-text');
 
     triggerElements.forEach(function (triggerElement, index) {
@@ -267,7 +271,7 @@
     window.onbeforeunload = function (e) {
         localStorage.setItem('scrollpos', window.scrollY);
     };
-</script>
+</script> -->
 
 <script src="/static/js/swiper-bundle.min.js"></script>
 <script src="/static/js/main.js"></script>
