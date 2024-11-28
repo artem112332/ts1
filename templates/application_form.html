@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/static/css/swiper-bundle.min.css">
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/css/media.css">
-    <link type="image/x-icon" href="/static/img/icon.ico" rel="icon">
+    <link type="image/x-icon" href="/static/img/icon.ico?v=2" rel="icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
@@ -61,85 +61,58 @@
 
 <hr class="horizontal-line">
 
-<main class="main">
-    <!-- <section id="description" class="description">
-        <div class="container description__container">
-            <p class="description__text">Данная платформа создает уникальную систему, где профессионалы могут обмениваться идеями, опытом и знаниями. Здесь проектанты могут находить наставников, которые помогут им развивать навыки и обеспечивать поддержку в процессе работы над проектами. Наставники, в свою очередь, могут делиться своим опытом, обучая новое поколение специалистов и внося вклад в их профессиональный рост.</p>
+<!-- Форма для отправки заявки -->
+<section class="application-form-form">
+    <div class="container application-form__container">
+        <div class="application-form__content">
+            <h1 class="application-form__title">Оставь свою заявку</h1>
+            
+            <form class="application-form__form" action="">
+                <div class="application-form__data">
+                    <label class="application-form__label">Фамилия и имя</label>
+                    <input type="text" class="application-form__input" placeholder="Введите свое ФИ" required>
+                </div>
+
+                <div class="application-form__data">
+                    <label class="application-form__label">фамилия и имя консультанта (необязательно)</label>
+                    <input type="text" class="application-form__input" placeholder="Введите ФИ консультанта">
+                </div>
+
+                <div class="application-form__data">
+                    <label class="application-form__label">Компетенции консультанта (необязательно)</label>
+                    <input type="text" class="application-form__input" placeholder="Введите компетенции консультанта">
+                </div>
+
+                <div class="application-form__data">
+                    <label class="application-form__label">Тема вопроса</label>
+                    <input type="text" class="application-form__input" placeholder="Введите тему вопроса" required>
+                </div>
+
+                <div class="application-form__data">
+                    <label class="application-form__label">подробное описание вопроса</label>
+                    <input type="text" class="application-form__input" placeholder="Введите описание вопроса" required>
+                </div>
+
+                <div class="application-form__data">
+                    <label class="application-form__label">Вложения</label>
+                    <img src="../static/img/attachment.png" class="application-form__attachment">
+                    <input type="file" id="file-upload" class="application-form__input application-form__input_file" multiple required>
+                </div>
+
+                <div class="application-form__data flex">
+                    <input class="application-form__checkbox" name="send_to_mentor" type="checkbox">
+                    <p class="application-form__checkbox_text">Отправить лично консультанту</p>
+                </div>
+            </form>
+
+            <form method="post" action="/add_question/" class="application-form__question flex">
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                <input name="question" type="text" placeholder="Кто-нибудь обязательно поможет" class="questions-list__write_input">
+                <button type="submit" class="btn btn-reset questions__btn">Оставить<img class="questions__btn_image" src="/static/img/line.png"></button>
+            </form>
         </div>
-    </section> -->
-
-    <section id="cards" class="cards">
-        <div class="container cards__container swiper">
-            <div class="cards__content">
-                <h2 class="cards__title2">Смотри карточки наставников</h2>
-                <h1 class="cards__title1">находи нужного человека </h1>
-
-                <ul class="cards__list list-reset flex swiper-wrapper">
-                    {% for tutor in tutors %}
-                        <li onclick="window.location.href='/profile/{{ tutor.user_id }}'"
-                            class="cards__item swiper-slide">
-                            <article class="cards__preview">
-                                <div class="cards__preview_image">
-                                    <img class="cards__photo" src="{{ tutor.photo.url }}" alt="Аватар">
-                                </div>
-                                <div class="cards__preview_content flex">
-                                    <div class="cards__preview_text">
-                                        <p class="cards__preview_name">{{ tutor.first_and_last_name() }}</p>
-                                        <p class="cards__preview_descr">{{ tutor.status }}</p>
-                                        <br>
-                                        <p class="cards__preview_descr">{{ tutor.description }}</p>
-                                    </div>
-                                </div>
-                            </article>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        
-            <div class="swiper-pagination"></div>
-        </div>
-        
-        <div class="swiper-button-prev">
-            <i class="ri-arrow-left-s-line"></i>
-        </div>
-        <div class="swiper-button-next">
-            <i class="ri-arrow-right-s-line"></i>
-        </div>
-
-    </section>
-
-    <section id="questions" class="questions">
-        <div class="container questions__container swiper">
-            <div class="questions__content">
-                <h2 class="questions__title2">Найди ответ или</h2>
-                <h1 class="questions__title1">задай свой вопрос</h1>
-
-                <ul class="questions__list list-reset flex swiper-wrapper">
-                    {% for question in questions %}
-                        <li class="questions__item swiper-slide" onclick="window.location.href='/questions/'">
-                            <p class="questions__item_question">{{ question.text }}</p>
-                            <div class="questions__item_author flex">
-                                <img src="{{ question.author.photo.url }}" class="questions-block__avatar" alt="Аватар">
-                                <div class="questions__item_author_info">
-                                    <p class="questions__name">{{ question.author.first_and_last_name() }}</p>
-                                    <p class="questions__direction">{{ question.author.status }}</p>
-                                </div>
-                            </div>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-
-            <div class="swiper-questions-button-prev">
-                <i class="ri-arrow-left-s-line"></i>
-            </div>
-            <div class="swiper-questions-button-next">
-                <i class="ri-arrow-right-s-line"></i>
-            </div>
-            <div class="swiper-pagination-questions"></div>
-        </div>
-    </section>
-</main>
+    </div>
+</section>
 
 <script src="/static/js/swiper-bundle.min.js"></script>
 <script src="/static/js/main.js"></script>

@@ -61,60 +61,37 @@
 
 <hr class="horizontal-line">
 
-<!-- Форма для отправки заявки -->
-<section class="application">
-    <div class="container application__container">
-        <div class="application__content">
-            <h1 class="application__title">Оставь свою заявку</h1>
-            
-            <form class="application__form" action="">
-                <div class="application__data">
-                    <label class="application__label">Фамилия и имя</label>
-                    <input type="text" class="application__input" placeholder="Введите свое ФИ" required>
+<main class="user">
+    <div class="container user__container">
+        <div class="user__content flex">
+            <div class="user__avatar">
+                <img class="user__image" src="../static/img/avtomobilist.webp" alt="Аватар">
+            </div>
+
+            <div class="user__info">
+                <div class="user__info_top flex">
+                    <h1 class="user__name">Галкин Владимир</h1>
                 </div>
 
-                <div class="application__data">
-                    <label class="application__label">фамилия и имя консультанта (необязательно)</label>
-                    <input type="text" class="application__input" placeholder="Введите ФИ консультанта">
-                </div>
+                <div class="application__content">
+                    <p class="application__title">Figma</p>
 
-                <div class="application__data">
-                    <label class="application__label">Компетенции консультанта (необязательно)</label>
-                    <input type="text" class="application__input" placeholder="Введите компетенции консультанта">
-                </div>
+                    <p class="application__text">Как экспортировать изображение в фигме</p>
 
-                <div class="application__data">
-                    <label class="application__label">Тема вопроса</label>
-                    <input type="text" class="application__input" placeholder="Введите тему вопроса" required>
-                </div>
+                    <div class="application__data">
+                        <label class="application__label">Вложения</label>
+                        <img src="../static/img/attachment.png" class="application__attachment">
+                        <input type="file" id="file-upload" class="application__input application__input_file" multiple required>
+                    </div>
 
-                <div class="application__data">
-                    <label class="application__label">подробное описание вопроса</label>
-                    <input type="text" class="application__input" placeholder="Введите описание вопроса" required>
+                    <button type="submit" class="btn btn-reset application__btn">Принять<img class="application__btn_image" src="/static/img/tick.png"></button>
                 </div>
-
-                <div class="application__data">
-                    <label class="application__label">Вложения</label>
-                    <img src="../static/img/attachment.png" class="application__attachment">
-                    <input type="file" id="file-upload" class="application__input application__input_file" multiple required>
-                </div>
-
-                <div class="application__data flex">
-                    <input class="application__checkbox" name="send_to_mentor" type="checkbox">
-                    <p class="application__checkbox_text">Отправить лично консультанту</p>
-                </div>
-            </form>
-
-            <form method="post" action="/add_question/" class="application__question flex">
-                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                <input name="question" type="text" placeholder="Кто-нибудь обязательно поможет" class="questions-list__write_input">
-                <button type="submit" class="btn btn-reset questions__btn">Оставить<img class="questions__btn_image" src="/static/img/line.png"></button>
-            </form>
+            </div>
         </div>
     </div>
-</section>
-
+</main>
 <script src="/static/js/swiper-bundle.min.js"></script>
 <script src="/static/js/main.js"></script>
+<script src="/static/js/script.js"></script>
 </body>
 </html>

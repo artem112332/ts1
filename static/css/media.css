@@ -11,13 +11,13 @@
         height: auto;
     } */
 
-    .cards__item {
+    /* .cards__item {
         min-height: 425px;
-    }
+    } */
 
-    .questions__item {
+    /* .questions__item {
         min-height: 300px;
-    }
+    } */
 
     .questions__item_author {
         padding: 0 15px;
