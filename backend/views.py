@@ -413,4 +413,7 @@ def like_comment(request):
 
 
 def application_form(request):
+    return render(request, 'application_form.html')
+
+def application(request):
     return render(request, 'application.html')
