@@ -417,3 +417,6 @@ def application_form(request):
 
 def application(request):
     return render(request, 'application.html')
+
+def mentor_application(request):
+    return render(request, 'mentor_application.html')
