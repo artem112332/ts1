@@ -367,8 +367,7 @@ body {
 .profile__exit_icon {
     fill: rgba(255, 229, 134, 1);
     stroke: rgba(255, 229, 134, 1);
-    transition: fill 0.2s ease-in-out;
-    transition: stroke 0.2s ease-in-out;
+    transition: fill 0.2s ease-in-out, stroke 0.2s ease-in-out;
 }
 
 .profile__exit_icon:hover {
@@ -1384,6 +1383,12 @@ input[type="checkbox"]:checked {
     outline: 2px solid #C3EEB3;
     border-radius: 16px;
     color: #C3EEB3;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.notice_accept:hover {
+    background-color: #C3EEB3;
+    color: #fff;
 }
 
 .notice_reject {
@@ -1398,6 +1403,12 @@ input[type="checkbox"]:checked {
     outline: 2px solid #FFA5A4;
     border-radius: 16px;
     color: #FFA5A4;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.notice_reject:hover {
+    background-color: #FFA5A4;
+    color: #fff;
 }
 
 .notices__item_btns-accept {
@@ -1638,8 +1649,7 @@ input[type="checkbox"]:checked {
   
 .application-form__attachment {
     position: absolute;
-    top: 45%;
-    left: 10px;
+    padding: 10px;
 }
 
 .application-form__label {
@@ -1763,6 +1773,14 @@ input[type="checkbox"]:checked {
 .application__btn_image {
     vertical-align: middle;
     margin-left: 10px;
+}
+
+.application__btn_send {
+    display: block;
+    margin: 0 auto;
+    margin-top: 100px;
+    padding: 15px 10px;
+    width: 150px;
 }
   
 /* user */

@@ -61,37 +61,45 @@
 
 <hr class="horizontal-line">
 
-<main class="user">
-    <div class="container user__container">
-        <div class="user__content flex">
-            <div class="user__avatar">
-                <img class="user__image" src="../static/img/avtomobilist.webp" alt="Аватар">
-            </div>
-
-            <div class="user__info">
-                <div class="user__info_top flex">
-                    <h1 class="user__name">Галкин Владимир</h1>
+<section class="application-form-form">
+    <div class="container application-form__container">
+        <div class="application-form__content">
+            <h1 class="application-form__title">Хочешь быть консультантом? Заполни свои компетенции</h1>
+            
+            <form class="application-form__form" action="">
+                <div class="application-form__data">
+                    <label class="application-form__label">Учебное учереждение</label>
+                    <input type="text" class="application-form__input" placeholder="Введите учебное учереждение" required>
                 </div>
 
-                <div class="application__content">
-                    <p class="application__title">Figma</p>
-
-                    <p class="application__text">Как экспортировать изображение в фигме</p>
-
-                    <!-- <div class="application__data">
-                        <label class="application__label">Вложения</label>
-                        <img src="../static/img/attachment.png" class="application__attachment">
-                        <input type="file" id="file-upload" class="application__input application__input_file" multiple required>
-                    </div> -->
-
-                    <button type="submit" class="btn btn-reset questions__btn">Оставить<img class="questions__btn_image" src="/static/img/line.png"></button>
+                <div class="application-form__data">
+                    <label class="application-form__label">Факультет</label>
+                    <input type="text" class="application-form__input" placeholder="Введите факультет">
                 </div>
-            </div>
+
+                <div class="application-form__data">
+                    <label class="application-form__label">Специальность</label>
+                    <input type="text" class="application-form__input" placeholder="Введите специальность">
+                </div>
+
+                <div class="application-form__data">
+                    <label class="application-form__label">Ключевые навыки</label>
+                    <input type="text" class="application-form__input" placeholder="Введите ключевые навыки" required>
+                </div>
+
+                <div class="application-form__data">
+                    <label class="application-form__label">Вложения</label>
+                    <img src="../static/img/attachment.png" class="application-form__attachment">
+                    <input type="file" id="file-upload" class="application-form__input application-form__input_file" multiple required>
+                </div>
+            </form>
+
+            <button type="submit" class="btn btn-reset application__btn_send">Отправить<img class="application__btn_image" src="/static/img/tick.png"></button>
         </div>
     </div>
-</main>
+</section>
+
 <script src="/static/js/swiper-bundle.min.js"></script>
 <script src="/static/js/main.js"></script>
-<script src="/static/js/script.js"></script>
 </body>
 </html>
