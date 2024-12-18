@@ -76,90 +76,73 @@
 
 <hr class="horizontal-line">
 
-<section id="questions-list" class="questions-list">
-    <div class="container questions-list__container">
-
-        <div class="questions-list__write">
-            {% if user_profile.status != 'Наставник' %}
-                {#                <h3 class="questions-list__write_title">Оставь свою заявку</h3>#}
-                <form method="post" action="/application_form/">
-                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                    <input class="btn btn-reset user__btn__index" type="submit" value="Оставь свою заявку">
-                </form>
-            {% else %}
-                <h3 class="questions-list__write_title">Заявки на консультацию</h3>
-            {% endif %}
-        </div>
-
-        {% for application in applications %}
-            <div class="questions-block">
-                <form method="post" action="/reply_to_request/">
-                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                    <input type="hidden" name="application_id" value="{{ application.id }}">
-                    <input type="hidden" name="mentor_id" value="{{ user_profile.id }}">
-
-                    <p class="questions-block__datatime">
-                        {% if application.datetime.hour < 10 %}
-                            {% if application.datetime.minute < 10 %}
-                                0{{ application.datetime.hour }}:0{{ application.datetime.minute }}
-                            {% else %}
-                                0{{ application.datetime.hour }}:{{ application.datetime.minute }}
-                            {% endif %}
-                        {% else %}
-                            {% if application.datetime.minute < 10 %}
-                                {{ application.datetime.hour }}:0{{ application.datetime.minute }}
-                            {% else %}
-                                {{ application.datetime.hour }}:{{ application.datetime.minute }}
-                            {% endif %}
-                        {% endif %}
-                        {% if application.datetime.day < 10 %}
-                            {% if application.datetime.month < 10 %}
-                                0{{ application.datetime.day }}.0{{ application.datetime.month }}.
-                                {{ application.datetime.year }}
-                            {% else %}
-                                0{{ application.datetime.day }}.{{ application.datetime.month }}.
-                                {{ application.datetime.year }}
-                            {% endif %}
-                        {% else %}
-                            {% if application.datetime.month < 10 %}
-                                {{ application.datetime.day }}.0{{ application.datetime.month }}.
-                                {{ application.datetime.year }}
-                            {% else %}
-                                {{ application.datetime.day }}.{{ application.datetime.month }}.
-                                {{ application.datetime.year }}
-                            {% endif %}
-                        {% endif %}
-                    </p>
-                    <div class="flex">
-                        <img src="{{ application.sender.photo.url }}"#}
-                             onclick="window.location.href='/profile/{{ application.sender.user_id }}'" alt="Аватар"
-                             class="questions-block__avatar">
-                        <div class="questions-block__title">
-                            <p onclick="window.location.href='/profile/{{ application.sender.user_id }}'"
-                               class="questions-block__name">{{ application.sender.first_and_last_name() }}</p>
-                            <p class="questions-block__theme">{{ application.title }}</p>
-                            <p class="questions-block__descr">{{ application.description }}</p>
-                            <input type="submit" class="appclication_accept" name="reply" value="Принять">
+<section class="notices">
+    <div class="container notices__container">
+        <h1 class="notices__title">Мои заявки</h1>
+        {% if requests|length == 0 %}
+            <p class="notices__item__descr" align="center">Вы не оставляли заявки на консультацию</p>
+        {% endif %}
+        <ul class="notices__list list-reset">
+            {% for application in applications %}
+                <li class="notices__item flex">
+                    {% if application.type == 'Личная' %}
+                        <div class="notices__item_content"
+                             onclick="window.location.href='/applications/{{ application.id }}'">
+                            <p class="notices__item__name">{{ application.title }}</p>
+                            <p class="notices__item__descr">
+                                Кому: {{ application.reciever.first_and_last_name() }}</p>
                         </div>
-                    </div>
-                </form>
-            </div>
+                        {% if application.status == 'Принята' %}
+                            <div class="notices__form">
+                                <p class="notices__link">
+                                    <a class="user__form_data_link_notifications"
+                                       href="https://t.me/{{ application.reciever.telegram }}">
+                                        Telegram: @{{ application.reciever.telegram }}
+                                    </a>
+                                </p>
+                            </div>
+                            <div class="notices__status_accepted">Принята</div>
 
+                        {% elif application.status == 'Отказано' %}
+                            <div class="notices__status_rejected">Отказано</div>
+                            <div class="notices__form">
+                                {% if application.mentor_comment|length > 0 %}
+                                    <p class="notices__link">{{ application.mentor_comment }}</p>
+                                {% endif %}
+                            </div>
+                        {% elif application.status == 'Активна' %}
+                            <div class="notices__status_reviewed">На рассмотрении</div>
+                        {% endif %}
+
+                    {% elif application.type == 'Общая' %}
+                        <div class="notices__item_content"
+                             onclick="window.location.href='/applications/{{ application.id }}'">
+                            <p class="notices__item__name">{{ application.title }}</p>
+                            <p class="notices__item__descr">Публичная заявка</p>
+                        </div>
+                        {% if application.status == 'Принята' %}
+
+                            <div class="notices__form">
+                                <p class="notices__link">
+                                    <a class="user__form_data_link_notifications"
+                                       href="https://t.me/{{ application.reciever.telegram }}">
+                                        Telegram: @{{ application.reciever.telegram }}
+                                    </a>
+                                </p>
+                            </div>
+                            <div class="notices__status_accepted">Принята</div>
+
+                        {% elif application.status == 'Активна' %}
+                            <div class="notices__status_reviewed">Опубликована</div>
+                        {% endif %}
+                    {% endif %}
+
+                </li>
+            {% endfor %}
             <hr class="header__line">
-        {% endfor %}
+        </ul>
     </div>
 </section>
-{#<script>#}
-{#    document.addEventListener("DOMContentLoaded", function (event) {#}
-{#        var scrollpos = localStorage.getItem('scrollpos');#}
-{#        if (scrollpos) window.scrollTo(0, scrollpos);#}
-{#    });#}
-{##}
-{#    window.onbeforeunload = function (e) {#}
-{#        localStorage.setItem('scrollpos', window.scrollY);#}
-{#    };#}
-{#</script>#}
-
 
 <script src="/static/js/swiper-bundle.min.js"></script>
 <script src="/static/js/main.js"></script>

@@ -22,9 +22,11 @@
             <nav class="header__nav">
                 <ul class="header__list list-reset flex">
                     <a href="/" class="header__item">Главная</a>
-                    <a href="/questions" class="header__item">Заявки от проектантов</a>
+                    <a href="/applications" class="header__item">Заявки от проектантов</a>
                     <a href="/tutor_cards" class="header__item">Карточки консультантов</a>
-                    <a href="/notifications" class="header__item">Мои заявки<sup class="notifications-counter">0</sup></a>
+                    <a href="/notifications" class="header__item">Мои заявки
+{#                    <sup class="notifications-counter">0</sup>#}
+                </a>
                 </ul>
             </nav>
             <a href="/profile/{{ user.id }}" class="header__profile profile">
@@ -85,16 +87,11 @@
 
                     <div class="user__data">
                         <label for="middle_name" class="user__form_title">Отчество</label>
-                        <input type="text" id="middle_name" name="middle_name" class="user__form_input placeholder="Введи своё отчество" required value="{{ profile.middle_name }}">
+                        <input type="text" id="middle_name" name="middle_name" class="user__form_input" placeholder="Введи своё отчество" required value="{{ profile.middle_name }}">
                     </div>
                 </div>
                 <div class="user__form">
                     <p class="user__form_info">Информация</p>
-
-{#                    <div class="user__data">#}
-{#                        <label for="description" class="user__form_title">Напиши свои компетенции</label>#}
-{#                        <input type="text" id="skills" name="skills" class="user__form_input" placeholder="Опиши свои умения" value="">#}
-{#                    </div>#}
 
                     <div class="user__data flex">
                         <div class="user__data_left">
@@ -104,7 +101,7 @@
 
                         <div class="user__data_right">
                             <span class="user__form_title">Email</span>
-                            <input type="email" id="email" name="email" class="user__form_input" placeholder="Введите свой e-mail" value="{{ profile.user.username }}" required>
+                            <input type="text" id="telegram" name="telegram" class="user__form_input" placeholder="Введите свой telegram" value="{{ profile.user.username }}" required>
                         </div>
                     </div>
 
@@ -168,66 +165,6 @@
                             </li>
                         </ul>
                         </div>
-                        <!--
-                        <div class="user__form">
-                            <p id="timetable_text" class="consult_question">
-                                У вас есть возможность проводить консультации для проектантов
-                                <br><br>
-                                Хотите ли вы проводить консультации?
-                                <br>
-                            </p>
-                            <div class="user_item flex">
-                                {% if profile.have_schedule == True %}
-                                    <input class="filter__checkbox" type="checkbox" id="consult_checkbox"
-                                           name="want_consult" checked>
-                                {% else %}
-                                    <input class="filter__checkbox" type="checkbox" id="consult_checkbox"
-                                           name="want_consult">
-                                {% endif %}
-                                <label class="filter__name" for="consult_checkbox">Да, я хочу проводить
-                                    консультации</label>
-                            </div>
-                        </div>
-                        <div id="want_consult" class="div_want_consult">
-                            <p class="user__input_timetable-title">Моё расписание</p>
-                            <p id="timetable_text" class="timetable_text">
-                                Выберите время, когда вам будет удобно проводить консультации.
-                                Невыбранные ячейки будут помечены как недоступные для записи
-                            </p>
-
-                            <table class="user__input_timetable" id="timetable">
-                                <tr>
-                                    <th class="timetable__head_cell"></th>
-                                    {% for week_day,date in week_days.items() %}
-                                        <th class="timetable__head_cell">
-                                            {{ week_day }} {{ '{}.{}'.format(date[2], date[1]) }}
-                                        </th>
-                                    {% endfor %}
-                                </tr>
-                                {% for time in schedule['Понедельник'].keys() %}
-                                    <tr>
-                                        <td class="timetable__body_cell-time">{{ time }}:00 - {{ time|int + 1 }}:00</td>
-                                        {% for week_day in schedule.keys() %}
-                                            {% if schedule[week_day][time] == 'Свободно' %}
-                                                <td class="timetable__body_cell">
-                                                    <label for="timetable__body_cell-input"></label>
-                                                    <input checked type="checkbox" id="timetable__body_cell-input"
-                                                           name="date_times"
-                                                           value="{{ week_day }} {{ time }}">
-                                                </td>
-                                            {% else %}
-                                                <td class="timetable__body_cell_unavailable">
-                                                    <label for="timetable__body_cell-input"></label>
-                                                    <input type="checkbox" id="timetable__body_cell-input"
-                                                           name="date_times"
-                                                           value="{{ week_day }} {{ time }}">
-                                                </td>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </tr>
-                                {% endfor %}
-                            </table>
-                        </div>-->
                     {% endif %}
 
                 <input type="submit" class="btn btn-reset user__btn" value="Сохранить изменения">
@@ -236,24 +173,6 @@
     </div>
 </main>
 
-<!-- <script>
-    const div = document.getElementById('want_consult');
-    const checkbox = document.getElementById('consult_checkbox')
-    if (checkbox.checked)
-        div.style.display = 'block';
-    else
-        div.style.display = 'none'
-
-    function toggle() {
-        const div = document.getElementById('want_consult');
-        if (this.checked)
-            div.style.display = 'block';
-        else
-            div.style.display = 'none'
-    }
-
-    document.getElementById('consult_checkbox').onchange = toggle;
-</script> -->
 <script src="/static/js/swiper-bundle.min.js"></script>
 <script src="/static/js/main.js"></script>
 <script src="/static/js/script.js"></script>
