@@ -1,4 +1,5 @@
 from datetime import datetime, date
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
@@ -7,17 +8,12 @@ from .models import *
 
 def index(request):
     user = request.user
+    user_profile = UserProfile.objects.get(user=user)
     applications = Application.objects.filter(type='Общая', status='Активна')
     tutors = UserProfile.objects.filter(status='Наставник')
 
-    return render(request, 'index.html', {'user': user, 'applications': applications, 'tutors': tutors})
-
-
-def mentor_application(request):
-    user = request.user
-    profile = UserProfile.objects.get(user=user)
-
-    return render(request, 'mentor_application.html', {'profile': profile})
+    return render(request, 'index.html',
+                  {'user': user, 'user_profile': user_profile, 'applications': applications, 'tutors': tutors})
 
 
 class Tutors(APIView):
@@ -165,19 +161,28 @@ def notifications(request):
     profile = UserProfile.objects.get(user=user)
 
     if profile.status == 'Наставник':
-        applications = Application.objects.filter(reciever=profile)
-        return render(request, 'notifications_projectant.html', {
+        applications = Application.objects.filter(reciever=profile).order_by('-datetime')
+        return render(request, 'notifications_mentor.html', {
             'user': user,
             'applications': applications
         })
 
-    # elif profile.is_admin:
+    elif profile.is_admin:
+        mentor_applications = MentorApplication.objects.filter(status='Активна')
 
+        return render(request, 'notifications_admin.html', {
+            'user': user,
+            'mentor_applications': mentor_applications
+        })
 
-    applications = Application.objects.filter(sender=profile).order_by('status')
-    return render(request, 'notifications_mentor.html', {
+    applications = Application.objects.filter(sender=profile).order_by('-datetime', 'status')
+
+    mentor_applications = MentorApplication.objects.filter(sender=profile).order_by('-datetime', 'status')
+
+    return render(request, 'notifications_projectant.html', {
         'user': user,
-        'applications': applications
+        'applications': applications,
+        'mentor_applications': mentor_applications
     })
 
 
@@ -187,6 +192,64 @@ def single_application_page(request, application_id):
     application = Application.objects.get(id=application_id)
 
     return render(request, 'application.html', {'application': application, 'profile': profile})
+
+
+class MentorApplicationPage(APIView):
+    def get(self, request):
+        user = request.user
+        profile = UserProfile.objects.get(user=user)
+
+        return render(request, 'mentor_application_form.html', {'profile': profile})
+
+    def post(self, request):
+        user = request.user
+        user_profile = UserProfile.objects.get(user=user)
+        university = request.POST.get('university')
+
+        if request.POST.get('faculty') is not None:
+            faculty = request.POST.get('faculty')
+        else:
+            faculty = ''
+
+        specialization = request.POST.get('specialization')
+        skills = request.POST.get('skills')
+
+        MentorApplication.objects.create(
+            sender=user_profile,
+            university=university,
+            faculty=faculty,
+            specialization=specialization,
+            skills=skills,
+            datetime=datetime.now()
+        )
+
+        return redirect('notifications')
+
+
+def single_mentor_application_page(request, mentor_application_id):
+    user = request.user
+    profile = UserProfile.objects.get(user=user)
+    application = MentorApplication.objects.get(id=mentor_application_id)
+
+    return render(request, 'mentor_application.html', {'application': application, 'profile': profile})
+
+
+@api_view(['POST'])
+def reply_to_mentor_application(request):
+    application_id = request.POST.get('application_id')
+    mentor_application = MentorApplication.objects.get(id=application_id)
+    sender_id = request.POST.get('sender_id')
+    sender = UserProfile.objects.get(id=sender_id)
+
+    reply = request.POST.get('reply')
+    if reply == 'Принять':
+        mentor_application.accept()
+        sender.make_mentor()
+
+    else:
+        mentor_application.decline()
+
+    return redirect('notifications')
 
 
 @api_view(['POST'])
@@ -199,10 +262,9 @@ def complete_application(request):
 
 @api_view(['POST'])
 def reply_to_request(request):
+    user = request.user
+    mentor = UserProfile.objects.get(user=user)
     application_id = request.POST.get('application_id')
-    mentor_id = request.POST.get('mentor_id')
-
-    mentor = UserProfile.objects.get(id=mentor_id)
     application = Application.objects.get(id=application_id)
     application.reciever = mentor
 
@@ -234,7 +296,6 @@ def applications_page(request):
                                               })
 
 
-@api_view(['GET'])
 def application_form(request):
     appl_type = 'Общая'
 

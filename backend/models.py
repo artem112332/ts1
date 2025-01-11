@@ -105,6 +105,32 @@ class Application(models.Model):
     #         self.likes -= 1
     #     self.save()
 
+
+class MentorApplication(models.Model):
+    sender = models.ForeignKey(UserProfile, models.CASCADE)
+    university = models.CharField(max_length=200)
+    faculty = models.CharField(max_length=200, blank=True, null=True)
+    specialization = models.CharField(max_length=200)
+    skills = models.TextField(max_length=5000)
+    status_choices = [
+        ('Активна', 'Активна'),
+        ('Принята', 'Принята'),
+        ('Отказано', 'Отказано')
+    ]
+    status = models.CharField(choices=status_choices, max_length=200, default='Активна')
+    datetime = models.DateTimeField(blank=True)
+
+    def __str__(self):
+        return f'№{self.id} {self.sender.short_name()}'
+
+    def accept(self):
+        self.status = 'Принята'
+        self.save()
+
+    def decline(self):
+        self.status = 'Отказано'
+        self.save()
+
 # class Commentary(models.Model):
 #     author = models.ForeignKey(UserProfile, models.CASCADE)
 #     application = models.ForeignKey(Application, on_delete=models.CASCADE)

@@ -5,7 +5,9 @@ urlpatterns = [
     path('profile/<int:user_id>/', profile_page),
     path('notifications/', notifications, name='notifications'),
     path('applications/<int:application_id>', single_application_page),
+    path('mentor_applications/<int:mentor_application_id>', single_mentor_application_page),
     path('reply_to_request/', reply_to_request),
+    path('reply_to_mentor_application/', reply_to_mentor_application),
     path('complete_application/', complete_application),
     path('edit_profile/', ProfileEdit.as_view()),
     path('tutor_cards/', Tutors.as_view()),
@@ -15,5 +17,5 @@ urlpatterns = [
     # path('like_question/', like_question),
     # path('like_comment/', like_comment),
     path('application_form/', application_form),
-    path('mentor_application/', mentor_application)
+    path('mentor_application/', MentorApplicationPage.as_view())
 ]

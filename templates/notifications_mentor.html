@@ -78,65 +78,52 @@
 
 <section class="notices">
     <div class="container notices__container">
-        <h1 class="notices__title">Мои заявки</h1>
+        <h1 class="notices__title">Входящие заявки</h1>
         {% if requests|length == 0 %}
-            <p class="notices__item__descr" align="center">Вы не оставляли заявки на консультацию</p>
+            <p class="notices__item__descr" align="center">У вас нет входящих заявок на консультацию</p>
         {% endif %}
+
         <ul class="notices__list list-reset">
             {% for application in applications %}
-                <li class="notices__item flex">
-                    {% if application.type == 'Личная' %}
+                <li>
+                    <form class="notices__item flex" method="post" action="/reply_to_request/">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                        <input type="hidden" name="application_id" value="{{ application.id }}">
+
+                        <img src="{{ application.sender.photo.url }}" class="notices__item_avatar" alt="Аватар">
                         <div class="notices__item_content"
                              onclick="window.location.href='/applications/{{ application.id }}'">
                             <p class="notices__item__name">{{ application.title }}</p>
-                            <p class="notices__item__descr">
-                                Кому: {{ application.reciever.first_and_last_name() }}</p>
+                            <p class="notices__item__descr">{{ application.sender.first_and_last_name() }}</p>
                         </div>
-                        {% if application.status == 'Принята' %}
-                            <div class="notices__form">
-                                <p class="notices__link">
-                                    <a class="user__form_data_link_notifications"
-                                       href="https://t.me/{{ application.reciever.telegram }}">
-                                        Telegram: @{{ application.reciever.telegram }}
-                                    </a>
-                                </p>
-                            </div>
-                            <div class="notices__status_accepted">Принята</div>
+                        {% if application.status == 'Активна' %}
+                            <input type="submit" class="notice_accept" name="reply" value="Принять">
+                            <input type="submit" class="notice_reject" name="reply" value="Отклонить">
 
-                        {% elif application.status == 'Отказано' %}
-                            <div class="notices__status_rejected">Отказано</div>
-                            <div class="notices__form">
-                                {% if application.mentor_comment|length > 0 %}
-                                    <p class="notices__link">{{ application.mentor_comment }}</p>
+                            {#                            <div class="notices__form">#}
+                            {#                                <input type="text" name="comment" placeholder="Комментарий" class="notices__input">#}
+                            {#                            </div>#}
+                        {% else %}
+                            <div class="notices__form flex">
+                                {% if application.status == 'Принята' %}
+                                    <div class="notices__form">
+                                        <p class="notices__link">
+                                            <a class="user__form_data_link_notifications"
+                                               href="https://t.me/{{ application.sender.telegram }}">
+                                                Telegram: @{{ application.sender.telegram }}
+                                            </a>
+                                        </p>
+                                    </div>
+
+                                    <div class="notices__status_accepted">Принята</div>
+
+                                {% elif application.status == 'Отказано' %}
+                                    <div class="notices__status_rejected">Отклонена</div>
+
                                 {% endif %}
                             </div>
-                        {% elif application.status == 'Активна' %}
-                            <div class="notices__status_reviewed">На рассмотрении</div>
                         {% endif %}
-
-                    {% elif application.type == 'Общая' %}
-                        <div class="notices__item_content"
-                             onclick="window.location.href='/applications/{{ application.id }}'">
-                            <p class="notices__item__name">{{ application.title }}</p>
-                            <p class="notices__item__descr">Публичная заявка</p>
-                        </div>
-                        {% if application.status == 'Принята' %}
-
-                            <div class="notices__form">
-                                <p class="notices__link">
-                                    <a class="user__form_data_link_notifications"
-                                       href="https://t.me/{{ application.reciever.telegram }}">
-                                        Telegram: @{{ application.reciever.telegram }}
-                                    </a>
-                                </p>
-                            </div>
-                            <div class="notices__status_accepted">Принята</div>
-
-                        {% elif application.status == 'Активна' %}
-                            <div class="notices__status_reviewed">Опубликована</div>
-                        {% endif %}
-                    {% endif %}
-
+                    </form>
                 </li>
             {% endfor %}
             <hr class="header__line">

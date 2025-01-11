@@ -117,16 +117,13 @@
                                 0{{ application.datetime.day }}.0{{ application.datetime.month }}.
                                 {{ application.datetime.year }}
                             {% else %}
-                                0{{ application.datetime.day }}.{{ application.datetime.month }}.
-                                {{ application.datetime.year }}
+                                0{{ application.datetime.day }}.{{ application.datetime.month }}.{{ application.datetime.year }}
                             {% endif %}
                         {% else %}
                             {% if application.datetime.month < 10 %}
-                                {{ application.datetime.day }}.0{{ application.datetime.month }}.
-                                {{ application.datetime.year }}
+                                {{ application.datetime.day }}.0{{ application.datetime.month }}.{{ application.datetime.year }}
                             {% else %}
-                                {{ application.datetime.day }}.{{ application.datetime.month }}.
-                                {{ application.datetime.year }}
+                                {{ application.datetime.day }}.{{ application.datetime.month }}.{{ application.datetime.year }}
                             {% endif %}
                         {% endif %}
                     </p>
@@ -139,7 +136,9 @@
                                class="questions-block__name">{{ application.sender.first_and_last_name() }}</p>
                             <p class="questions-block__theme">{{ application.title }}</p>
                             <p class="questions-block__descr">{{ application.description }}</p>
-                            <input type="submit" class="appclication_accept" name="reply" value="Принять">
+                            {% if user_profile.status == 'Наставник' %}
+                                <input type="submit" class="appclication_accept" name="reply" value="Принять">
+                            {% endif %}
                         </div>
                     </div>
                 </form>

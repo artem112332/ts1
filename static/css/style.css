@@ -1432,6 +1432,7 @@ input[type="checkbox"]:checked {
     color: #FFA5A4;
     transition: background-color 0.3s, color 0.3s;
     background-color: transparent;
+    border: none;
 }
 
 .notice_reject:hover {
@@ -1568,7 +1569,7 @@ input[type="checkbox"]:checked {
     line-height: 24px;
     border-radius: 12px;
     width: 150px;
-    color: rgba(195, 238, 179, 1);
+    color: rgb(144, 229, 115);
     outline: 2px solid rgba(195, 238, 179, 1);
 }
 
@@ -1601,7 +1602,7 @@ input[type="checkbox"]:checked {
     line-height: 24px;
     border-radius: 12px;
     width: 150px;
-    color: rgba(255, 165, 164, 1);
+    color: rgb(255, 133, 132);
     outline: 2px solid rgba(255, 165, 164, 1);
 }
 
@@ -1616,7 +1617,7 @@ input[type="checkbox"]:checked {
     line-height: 24px;
     border-radius: 12px;
     width: 150px;
-    color: rgba(255, 229, 134, 1);
+    color: rgb(236, 205, 87);
     outline: 2px solid rgba(255, 229, 134, 1);
 }
 
